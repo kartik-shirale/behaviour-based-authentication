@@ -1,0 +1,30 @@
+2025-08-31 23:51:28,689 - __main__ - INFO - Starting simple Flask application...
+2025-08-31 23:51:28,690 - __main__ - INFO - Registered routes:
+2025-08-31 23:51:28,690 - __main__ - INFO -   /static/<path:filename> -> static [GET, HEAD, OPTIONS]
+2025-08-31 23:51:28,690 - __main__ - INFO -   /health -> health_check [GET, HEAD, OPTIONS]
+2025-08-31 23:51:28,690 - __main__ - INFO -   /status -> service_status [GET, HEAD, OPTIONS]
+2025-08-31 23:51:28,690 - __main__ - INFO -   /encode/motion -> encode_motion [POST, OPTIONS]
+2025-08-31 23:51:28,690 - __main__ - INFO -   /encode/gesture -> encode_gesture [POST, OPTIONS]
+2025-08-31 23:51:28,691 - __main__ - INFO -   /encode/typing -> encode_typing [POST, OPTIONS]
+2025-08-31 23:51:28,691 - __main__ - INFO -   / -> root [GET, HEAD, OPTIONS]
+2025-08-31 23:51:28,710 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:51:28,710 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:52:23,920 - __main__ - INFO - Starting simple Flask application...
+2025-08-31 23:52:23,920 - __main__ - INFO - Registered routes:
+2025-08-31 23:52:23,920 - __main__ - INFO -   /static/<path:filename> -> static [HEAD, OPTIONS, GET]
+2025-08-31 23:52:23,921 - __main__ - INFO -   /health -> health_check [HEAD, OPTIONS, GET]
+2025-08-31 23:52:23,921 - __main__ - INFO -   /status -> service_status [HEAD, OPTIONS, GET]
+2025-08-31 23:52:23,921 - __main__ - INFO -   /encode/motion -> encode_motion [POST, OPTIONS]
+2025-08-31 23:52:23,921 - __main__ - INFO -   /encode/gesture -> encode_gesture [POST, OPTIONS]
+2025-08-31 23:52:23,921 - __main__ - INFO -   /encode/typing -> encode_typing [POST, OPTIONS]
+2025-08-31 23:52:23,922 - __main__ - INFO -   / -> root [HEAD, OPTIONS, GET]
+2025-08-31 23:52:23,937 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.1.5:5002
+2025-08-31 23:52:23,938 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:52:33,870 - __main__ - INFO - Health endpoint accessed
+2025-08-31 23:52:33,871 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:52:33] "GET /health HTTP/1.1" 200 -

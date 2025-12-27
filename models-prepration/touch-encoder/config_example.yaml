@@ -1,0 +1,35 @@
+# Touch Dynamics Encoder Configuration
+# Copy this file to config.yaml and modify as needed
+
+model:
+  lstm_hidden_dim: 256
+  lstm_num_layers: 2
+  bidirectional: true
+  output_dim: 256
+  dropout: 0.3
+  input_features: 7  # startX, startY, endX, endY, duration, distance, velocity
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  num_epochs: 100
+  early_stopping_patience: 10
+  gradient_clip_norm: 1.0
+  validation_split: 0.2
+  random_seed: 42
+
+data:
+  max_sequence_length: 100
+  min_sequence_length: 5
+  normalize_features: true
+  gesture_types:
+    - tap
+    - swipe
+    - scroll
+    - pinch
+    - long_press
+
+paths:
+  model_save_dir: ./models
+  logs_dir: ./logs
+  data_dir: ./data

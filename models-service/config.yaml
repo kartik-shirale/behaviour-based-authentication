@@ -1,0 +1,59 @@
+# Fraud Detection Encoder API Configuration
+# This is a sample configuration file showing all available options
+
+# Server configuration
+server:
+  host: "0.0.0.0"          # Host to bind to (0.0.0.0 for all interfaces)
+  port: 5002               # Port to listen on (changed from 5000 to avoid conflicts)
+  debug: false             # Enable Flask debug mode (disable in production)
+
+# API configuration
+api:
+  max_request_size: 16777216    # Maximum request size in bytes (16MB)
+  max_batch_size: 100           # Maximum number of samples in batch requests
+  request_timeout: 30           # Request timeout in seconds
+  enable_cors: true             # Enable CORS for cross-origin requests
+
+# Logging configuration
+logging:
+  level: "INFO"                 # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null                    # Log file path (null for console only)
+
+# Security configuration
+security:
+  max_content_length: 16777216  # Maximum content length
+  rate_limit_enabled: false     # Enable rate limiting (requires Redis)
+  rate_limit_per_minute: 60     # Requests per minute per IP
+
+# Model configuration
+models:
+  # Motion encoder (IMU data)
+  motion_encoder:
+    model_path: "models/motion_encoder/model.pth"
+    processor_path: "models/motion_encoder/processor.pkl"
+    enabled: true
+    
+  # Touch/gesture encoder
+  touch_encoder:
+    model_path: "models/touch_encoder/model.pth"
+    enabled: true
+    
+  # Typing/keystroke encoder
+  typing_encoder:
+    model_path: "models/typing_encoder/model.pth"
+    metadata_path: "models/typing_encoder/metadata.pkl"
+    config_path: "models/typing_encoder/config.yaml"
+    enabled: true
+
+# Performance configuration
+performance:
+  enable_model_caching: true    # Cache loaded models in memory
+  batch_processing_timeout: 60  # Timeout for batch processing
+  max_concurrent_requests: 10   # Maximum concurrent requests
+
+# Monitoring configuration
+monitoring:
+  enable_metrics: false         # Enable metrics collection
+  metrics_endpoint: "/metrics"   # Prometheus metrics endpoint
+  health_check_interval: 30     # Health check interval in seconds

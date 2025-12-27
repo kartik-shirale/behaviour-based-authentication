@@ -1,0 +1,46 @@
+-- Merging decision tree log ---
+manifest
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:1:1-11:12
+	package
+		INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:2:11-57
+	xmlns:android
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:3:3-65
+	android:name
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:3:20-62
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:4:3-76
+	android:name
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:4:20-73
+uses-permission#android.permission.PACKAGE_USAGE_STATS
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:5:3-112
+	tools:ignore
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:5:74-109
+	android:name
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:5:20-73
+uses-permission#android.permission.REQUEST_INSTALL_PACKAGES
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:6:3-81
+	android:name
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:6:20-78
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:7:3-73
+	android:name
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:7:20-70
+uses-feature#android.hardware.location.gps
+ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:10:3-89
+	android:required
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:10:62-86
+	android:name
+		ADDED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:10:17-61
+uses-sdk
+INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml
+INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml

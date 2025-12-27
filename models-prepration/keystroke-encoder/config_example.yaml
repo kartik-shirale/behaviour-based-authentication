@@ -1,0 +1,61 @@
+# Example configuration file for keystroke dynamics encoder
+# Copy this file and modify as needed for your specific use case
+
+# Model architecture parameters
+model:
+  char_embedding_dim: 64          # Dimension of character embeddings
+  lstm_hidden_dim: 256            # Hidden dimension of LSTM layers
+  lstm_num_layers: 2              # Number of LSTM layers
+  bidirectional: true             # Use bidirectional LSTM
+  output_dim: 256                 # Final embedding dimension
+  dropout: 0.3                    # Dropout rate for regularization
+  numerical_features: 4           # Number of numerical features (dwellTime, flightTime, x, y)
+
+# Training parameters
+training:
+  batch_size: 32                  # Batch size for training
+  learning_rate: 0.001            # Initial learning rate
+  num_epochs: 100                 # Maximum number of training epochs
+  early_stopping_patience: 10     # Early stopping patience
+  gradient_clip_norm: 1.0         # Gradient clipping norm
+  validation_split: 0.2           # Fraction of data for validation
+  random_seed: 42                 # Random seed for reproducibility
+  loss_type: "contrastive"        # Loss function type: "contrastive" or "reconstruction"
+  contrastive_margin: 1.0         # Margin for contrastive loss
+  temperature: 0.1                # Temperature for contrastive loss
+
+# Data processing parameters
+data:
+  max_sequence_length: 500        # Maximum sequence length (longer sequences will be truncated)
+  min_sequence_length: 10         # Minimum sequence length (shorter sequences will be filtered)
+  normalize_features: true        # Whether to normalize numerical features
+  special_chars:                  # Special characters in vocabulary
+    - "<PAD>"                     # Padding token
+    - "<UNK>"                     # Unknown character token
+    - "backspace"                 # Backspace key
+    - "enter"                     # Enter key
+    - " "                         # Space character
+
+# File paths
+paths:
+  model_save_dir: "./models"      # Directory to save trained models
+  logs_dir: "./logs"              # Directory for training logs
+  data_dir: "./data"              # Directory for data files
+
+# Advanced training options (optional)
+advanced:
+  use_mixed_precision: false      # Use automatic mixed precision training
+  accumulate_grad_batches: 1      # Gradient accumulation steps
+  weight_decay: 1e-5              # L2 regularization weight
+  lr_scheduler:
+    type: "ReduceLROnPlateau"     # Learning rate scheduler type
+    factor: 0.5                   # Factor to reduce LR by
+    patience: 5                   # Patience for LR reduction
+    min_lr: 1e-6                  # Minimum learning rate
+
+# Model evaluation settings
+evaluation:
+  compute_similarity_matrix: true  # Compute pairwise similarity matrix
+  clustering_analysis: true        # Perform clustering analysis
+  max_clusters_to_test: 10        # Maximum number of clusters to test
+  visualization_method: "tsne"     # Method for 2D visualization: "tsne" or "pca"

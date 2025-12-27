@@ -1,0 +1,47 @@
+advanced:
+  accumulate_grad_batches: 1
+  lr_scheduler:
+    factor: 0.5
+    min_lr: 1e-6
+    patience: 5
+    type: ReduceLROnPlateau
+  use_mixed_precision: false
+  weight_decay: 1e-5
+data:
+  max_sequence_length: 500
+  min_sequence_length: 10
+  normalize_features: true
+  special_chars:
+  - <PAD>
+  - <UNK>
+  - backspace
+  - enter
+  - ' '
+evaluation:
+  clustering_analysis: true
+  compute_similarity_matrix: true
+  max_clusters_to_test: 10
+  visualization_method: tsne
+model:
+  bidirectional: true
+  char_embedding_dim: 64
+  dropout: 0.3
+  lstm_hidden_dim: 256
+  lstm_num_layers: 2
+  numerical_features: 4
+  output_dim: 256
+paths:
+  data_dir: ./data
+  logs_dir: ./logs
+  model_save_dir: ./models
+training:
+  batch_size: 32
+  contrastive_margin: 1.0
+  early_stopping_patience: 10
+  gradient_clip_norm: 1.0
+  learning_rate: 0.001
+  loss_type: contrastive
+  num_epochs: 100
+  random_seed: 42
+  temperature: 0.1
+  validation_split: 0.2

@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "timestamp": 1000,
+      "key": "h",
+      "press_time": 120,
+      "release_time": 180,
+      "x": 100.5,
+      "y": 200.3,
+      "pressure": 0.8,
+      "touch_major": 12.5,
+      "touch_minor": 8.2
+    },
+    {
+      "timestamp": 1200,
+      "key": "e",
+      "press_time": 110,
+      "release_time": 170,
+      "x": 120.2,
+      "y": 205.1,
+      "pressure": 0.7,
+      "touch_major": 11.8,
+      "touch_minor": 7.9
+    },
+    {
+      "timestamp": 1400,
+      "key": "l",
+      "press_time": 130,
+      "release_time": 190,
+      "x": 140.8,
+      "y": 210.7,
+      "pressure": 0.9,
+      "touch_major": 13.2,
+      "touch_minor": 8.5
+    },
+    {
+      "timestamp": 1600,
+      "key": "l",
+      "press_time": 125,
+      "release_time": 185,
+      "x": 140.5,
+      "y": 211.2,
+      "pressure": 0.8,
+      "touch_major": 12.9,
+      "touch_minor": 8.3
+    },
+    {
+      "timestamp": 1800,
+      "key": "o",
+      "press_time": 115,
+      "release_time": 175,
+      "x": 160.3,
+      "y": 215.8,
+      "pressure": 0.6,
+      "touch_major": 11.5,
+      "touch_minor": 7.6
+    }
+  ]
+}

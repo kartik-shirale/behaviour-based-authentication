@@ -1,0 +1,81 @@
+# Production Configuration for Fraud Detection Encoder API
+# Copy this file to config.yaml and customize for your environment
+
+server:
+  host: '0.0.0.0'  # Bind to all interfaces
+  port: 5002
+  debug: false      # NEVER enable debug in production
+  threaded: true    # Enable threading for better performance
+
+logging:
+  level: 'INFO'     # Use INFO or WARNING in production
+  file: '/app/logs/app.log'  # Log to file in production
+  format: 'json'    # Structured logging for better parsing
+  max_bytes: 10485760  # 10MB log rotation
+  backup_count: 5   # Keep 5 backup files
+
+models:
+  motion_encoder:
+    path: '/app/models/motion_encoder'
+    device: 'cpu'    # Change to 'cuda' if GPU available
+    batch_size: 32   # Adjust based on memory
+  
+  gesture_encoder:
+    path: '/app/models/touch_encoder'
+    device: 'cpu'
+    batch_size: 32
+  
+  typing_encoder:
+    path: '/app/models/typing_encoder'
+    device: 'cpu'
+    batch_size: 32
+
+# Security settings
+security:
+  api_key_required: true
+  api_key_header: 'X-API-Key'
+  cors_enabled: false  # Enable only if needed
+  cors_origins: []     # Specify allowed origins
+  max_content_length: 16777216  # 16MB max request size
+
+# Performance settings
+performance:
+  request_timeout: 30  # seconds
+  max_workers: 4       # Number of worker processes
+  worker_connections: 1000
+  keepalive_timeout: 2
+  
+# Rate limiting (requests per minute)
+rate_limiting:
+  enabled: true
+  default_limit: 100
+  endpoints:
+    '/encode/motion': 60
+    '/encode/gesture': 60
+    '/encode/typing': 60
+    '/health': 300
+    '/status': 30
+
+# Monitoring
+monitoring:
+  metrics_enabled: true
+  metrics_port: 9090
+  health_check_interval: 30
+  
+# Database (if needed for logging/analytics)
+database:
+  enabled: false
+  url: 'postgresql://user:password@localhost:5432/fraud_detection'
+  pool_size: 10
+  max_overflow: 20
+
+# Cache settings (Redis)
+cache:
+  enabled: false
+  redis_url: 'redis://localhost:6379/0'
+  ttl: 3600  # 1 hour cache TTL
+
+# Environment-specific settings
+environment: 'production'
+version: '1.0.0'
+service_name: 'fraud-detection-encoder-api'

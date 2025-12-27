@@ -1,0 +1,33 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="expo.modules.datacollection" >
+5
+6    <uses-sdk android:minSdkVersion="24" /> <!-- Basic permissions for device behavior -->
+7    <uses-permission android:name="android.permission.INTERNET" />
+7-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:3:3-65
+7-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:3:20-62
+8    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+8-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:4:3-76
+8-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:4:20-73
+9    <uses-permission
+9-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:5:3-112
+10        android:name="android.permission.PACKAGE_USAGE_STATS"
+10-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:5:20-73
+11        tools:ignore="ProtectedPermissions" />
+11-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:5:74-109
+12    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+12-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:6:3-81
+12-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:6:20-78
+13    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+13-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:7:3-73
+13-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:7:20-70
+14
+15    <uses-feature
+15-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:10:3-89
+16        android:name="android.hardware.location.gps"
+16-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:10:17-61
+17        android:required="false" />
+17-->S:\Fraude-detection\reversion-banking-application\modules\data-collection\android\src\main\AndroidManifest.xml:10:62-86
+18
+19</manifest>

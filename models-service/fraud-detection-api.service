@@ -1,0 +1,70 @@
+[Unit]
+Description=Fraud Detection Encoder API
+Documentation=https://github.com/your-org/fraud-detection-encoders
+After=network.target network-online.target
+Wants=network-online.target
+Requires=network.target
+
+[Service]
+# Service configuration
+Type=simple
+User=fraud-api
+Group=fraud-api
+WorkingDirectory=/opt/fraud-detection-api
+Environment=PATH=/opt/fraud-detection-api/venv/bin
+Environment=PYTHONPATH=/opt/fraud-detection-api
+Environment=PYTHONUNBUFFERED=1
+
+# Start command
+ExecStart=/opt/fraud-detection-api/venv/bin/python app.py
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Restart configuration
+Restart=always
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+MemoryLimit=2G
+CPUQuota=100%
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+ProtectSystem=strict
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+RestrictNamespaces=true
+
+# File system access
+ReadWritePaths=/opt/fraud-detection-api/logs
+ReadOnlyPaths=/opt/fraud-detection-api
+
+# Network security
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+IPAddressDeny=any
+IPAddressAllow=localhost
+IPAddressAllow=10.0.0.0/8
+IPAddressAllow=172.16.0.0/12
+IPAddressAllow=192.168.0.0/16
+
+# Capabilities
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Standard I/O
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=fraud-detection-api
+
+[Install]
+WantedBy=multi-user.target

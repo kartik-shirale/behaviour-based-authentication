@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "255123720044",
+    "project_id": "banking-security-b7579",
+    "storage_bucket": "banking-security-b7579.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255123720044:android:3175f28b636205abe09549",
+        "android_client_info": {
+          "package_name": "com.viskar.code.bakingapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255123720044-t3572n5fk176382b3dlo70lhvdu773iq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.viskar.code.bakingapplication",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "255123720044-bk6e6ud4i3mi3rag9joku2f34ukiqvom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkut9-YJQdi6ht93_G6-B0KlTGYlB8m4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255123720044-bk6e6ud4i3mi3rag9joku2f34ukiqvom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

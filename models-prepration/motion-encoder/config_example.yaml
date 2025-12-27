@@ -1,0 +1,114 @@
+# Motion Sensor Fraud Detection Model Configuration
+# This is an example configuration file for the motion sensor-based fraud detection system
+
+# Model Architecture Configuration
+model:
+  input_dim: 10  # 10 sensor features (accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z, motion_magnitude, rotation_rate)
+  embedding_dim: 64  # Dimension of feature embeddings
+  hidden_dim: 256  # LSTM hidden dimension
+  num_layers: 2  # Number of LSTM layers
+  bidirectional: true  # Use bidirectional LSTM
+  output_dim: 256  # Final embedding dimension
+  dropout: 0.2  # Dropout rate for regularization
+
+# Data Processing Configuration
+data:
+  sequence_length: 100  # Number of sensor readings per sequence
+  overlap: 0.5  # Overlap ratio for sliding windows
+  normalization: 'standard'  # Normalization method: 'standard', 'minmax', or 'none'
+  required_columns:
+    - 'accel_x'
+    - 'accel_y'
+    - 'accel_z'
+    - 'gyro_x'
+    - 'gyro_y'
+    - 'gyro_z'
+    - 'mag_x'
+    - 'mag_y'
+    - 'mag_z'
+    - 'motion_magnitude'
+    - 'rotation_rate'
+  validation_split: 0.2  # Fraction of data for validation
+  test_split: 0.1  # Fraction of data for testing
+  min_sequences_per_user: 10  # Minimum sequences required per user
+
+# Training Configuration
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  num_epochs: 100
+  patience: 10  # Early stopping patience
+  weight_decay: 1e-5  # L2 regularization
+  gradient_clip: 1.0  # Gradient clipping threshold
+  
+  # Loss function parameters
+  contrastive_margin: 1.0  # Margin for contrastive loss
+  temperature: 0.1  # Temperature for contrastive learning
+  
+  # Learning rate scheduler
+  scheduler:
+    type: 'ReduceLROnPlateau'  # 'StepLR', 'ReduceLROnPlateau', or 'CosineAnnealingLR'
+    factor: 0.5  # Factor to reduce learning rate
+    patience: 5  # Patience for ReduceLROnPlateau
+    min_lr: 1e-6  # Minimum learning rate
+
+# Model Checkpointing
+checkpoint:
+  save_best_only: true
+  monitor: 'val_loss'  # Metric to monitor for best model
+  mode: 'min'  # 'min' for loss, 'max' for accuracy
+  save_frequency: 5  # Save checkpoint every N epochs
+  max_checkpoints: 3  # Maximum number of checkpoints to keep
+
+# Inference Configuration
+inference:
+  similarity_threshold: 0.7  # Threshold for user authentication
+  batch_size: 64  # Batch size for inference
+  device: 'auto'  # 'cpu', 'cuda', or 'auto'
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - 'accuracy'
+    - 'precision'
+    - 'recall'
+    - 'f1_score'
+    - 'auc_roc'
+    - 'equal_error_rate'
+  cross_validation_folds: 5
+  bootstrap_samples: 1000
+
+# Logging Configuration
+logging:
+  level: 'INFO'  # 'DEBUG', 'INFO', 'WARNING', 'ERROR'
+  log_file: 'training.log'
+  tensorboard: true
+  wandb: false  # Set to true if using Weights & Biases
+  
+# Paths Configuration
+paths:
+  data_dir: 'data/'
+  model_dir: 'models/'
+  logs_dir: 'logs/'
+  results_dir: 'results/'
+  
+# Hardware Configuration
+hardware:
+  device: 'auto'  # 'cpu', 'cuda', or 'auto'
+  num_workers: 4  # Number of data loader workers
+  pin_memory: true  # Pin memory for faster GPU transfer
+  mixed_precision: false  # Use automatic mixed precision training
+
+# Reproducibility
+reproducibility:
+  seed: 42
+  deterministic: true
+  benchmark: false  # Set to true for consistent input sizes
+
+# Data Augmentation (Optional)
+augmentation:
+  enabled: false
+  noise_std: 0.01  # Standard deviation for Gaussian noise
+  rotation_angle: 5  # Maximum rotation angle in degrees
+  scaling_factor: 0.1  # Maximum scaling factor
+  time_warping: false  # Enable time warping augmentation

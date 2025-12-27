@@ -1,0 +1,31 @@
+{
+  "data": [
+    {
+      "timestamp": 1000,
+      "accel_x": 0.5,
+      "accel_y": -0.2,
+      "accel_z": 9.8,
+      "gyro_x": 0.1,
+      "gyro_y": -0.05,
+      "gyro_z": 0.02
+    },
+    {
+      "timestamp": 1100,
+      "accel_x": 0.6,
+      "accel_y": -0.1,
+      "accel_z": 9.7,
+      "gyro_x": 0.12,
+      "gyro_y": -0.03,
+      "gyro_z": 0.01
+    },
+    {
+      "timestamp": 1200,
+      "accel_x": 0.4,
+      "accel_y": -0.3,
+      "accel_z": 9.9,
+      "gyro_x": 0.08,
+      "gyro_y": -0.07,
+      "gyro_z": 0.03
+    }
+  ]
+}

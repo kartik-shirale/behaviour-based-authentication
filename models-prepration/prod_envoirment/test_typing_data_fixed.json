@@ -1,0 +1,41 @@
+{
+  "data": {
+    "keystrokes": [
+      {
+        "character": "h",
+        "dwellTime": 120,
+        "flightTime": 0,
+        "coordinate_x": 100.5,
+        "coordinate_y": 200.3
+      },
+      {
+        "character": "e",
+        "dwellTime": 110,
+        "flightTime": 80,
+        "coordinate_x": 120.2,
+        "coordinate_y": 205.1
+      },
+      {
+        "character": "l",
+        "dwellTime": 115,
+        "flightTime": 75,
+        "coordinate_x": 140.8,
+        "coordinate_y": 198.7
+      },
+      {
+        "character": "l",
+        "dwellTime": 118,
+        "flightTime": 82,
+        "coordinate_x": 140.8,
+        "coordinate_y": 198.7
+      },
+      {
+        "character": "o",
+        "dwellTime": 125,
+        "flightTime": 78,
+        "coordinate_x": 180.5,
+        "coordinate_y": 195.2
+      }
+    ]
+  }
+}

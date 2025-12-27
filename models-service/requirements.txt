@@ -1,0 +1,31 @@
+# Flask and web framework
+Flask==2.2.5
+Werkzeug==2.2.3
+flask-cors==6.0.1
+
+# Data processing and ML dependencies
+numpy==1.24.3
+pandas==2.0.3
+scipy==1.11.1
+scikit-learn==1.3.0
+
+# PyTorch dependencies (CPU version - adjust for GPU if needed)
+torch==2.0.1+cpu
+torchvision==0.15.2+cpu
+torchaudio==2.0.2+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Configuration and utilities
+PyYAML==6.0.1
+requests==2.31.0
+jsonschema==4.19.0
+
+# Logging and monitoring
+psutil==5.9.5
+
+# Development and testing (optional)
+pytest==7.4.0
+pytest-flask==1.2.0
+
+# Production server (optional - for deployment)
+gunicorn==21.2.0

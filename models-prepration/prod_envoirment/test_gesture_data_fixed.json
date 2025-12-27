@@ -1,0 +1,33 @@
+{
+  "data": {
+    "points": [
+      {
+        "distance": 25.5,
+        "duration": 150,
+        "endX": 175.5,
+        "endY": 225.3,
+        "startX": 150.5,
+        "startY": 200.3,
+        "velocity": 0.17
+      },
+      {
+        "distance": 30.2,
+        "duration": 180,
+        "endX": 185.2,
+        "endY": 235.1,
+        "startX": 155.2,
+        "startY": 205.1,
+        "velocity": 0.168
+      },
+      {
+        "distance": 22.8,
+        "duration": 140,
+        "endX": 170.8,
+        "endY": 220.7,
+        "startX": 148.8,
+        "startY": 198.7,
+        "velocity": 0.163
+      }
+    ]
+  }
+}

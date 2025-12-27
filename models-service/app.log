@@ -1,0 +1,229 @@
+2025-08-29 03:31:05,060 - app - INFO - Starting Fraud Detection Encoder API
+2025-08-29 03:31:05,061 - app - INFO - Host: 0.0.0.0
+2025-08-29 03:31:05,061 - app - INFO - Port: 5000
+2025-08-29 03:31:05,061 - app - INFO - Debug: False
+2025-08-29 03:31:05,080 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000
+2025-08-29 03:31:05,080 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:43:06,208 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:43:06,208 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:43:06,209 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:43:06,209 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:43:06,209 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:43:06,209 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:43:06,209 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:43:06,210 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:43:06,210 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:43:06,232 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:43:06,232 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:45:26,073 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:45:26,073 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:45:26,074 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:45:26,074 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:45:26,074 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:45:26,074 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:45:26,074 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:45:26,074 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:45:26,074 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:45:26,090 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:45:26,090 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:46:32,465 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:46:32,465 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:46:32,468 - werkzeug - INFO -  * Restarting with stat
+2025-08-31 23:46:49,038 - app - INFO - Initializing encoder service...
+2025-08-31 23:46:49,039 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:46:49,039 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:46:49,039 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:46:49,039 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:46:49,039 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:46:49,040 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:46:49,040 - app - INFO - Encoder service initialized successfully
+2025-08-31 23:46:49,061 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:46:49,061 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:46:49,063 - werkzeug - INFO -  * Restarting with stat
+2025-08-31 23:46:50,951 - app - INFO - Initializing encoder service...
+2025-08-31 23:46:50,952 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:46:50,952 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:46:50,952 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:46:50,952 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:46:50,953 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:46:50,953 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:46:50,953 - app - INFO - Encoder service initialized successfully
+2025-08-31 23:46:50,962 - werkzeug - WARNING -  * Debugger is active!
+2025-08-31 23:46:50,967 - werkzeug - INFO -  * Debugger PIN: 727-257-126
+2025-08-31 23:47:30,087 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:47:30,087 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:47:30,087 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:47:30,087 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:47:30,087 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:47:30,088 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:47:30,088 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:47:30,088 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:47:30,088 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:47:30,105 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:47:30,105 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:49:28,487 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:49:28,487 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:49:28,488 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:49:28,488 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:49:28,488 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:49:28,488 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:49:28,488 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:49:28,489 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:49:28,489 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:49:28,505 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:49:28,505 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:50:04,879 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:50:04,879 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:50:04,880 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:50:04,880 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:50:04,880 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:50:04,880 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:50:04,880 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:50:04,880 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:50:04,880 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:50:04,891 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:50:04,891 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:53:10,479 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:53:10,480 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:53:10,480 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:53:10,480 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:53:10,481 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:53:10,481 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:53:10,481 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:53:10,481 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:53:10,481 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:53:10,495 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:53:10,495 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:53:36,218 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:53:36,218 - encoder_service - WARNING - Motion encoder model not found at ./models/motion_encoder.pt, using placeholder
+2025-08-31 23:53:36,219 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:53:36,219 - encoder_service - WARNING - Touch encoder model not found at ./models/gesture_encoder.pt, using placeholder
+2025-08-31 23:53:36,219 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:53:36,219 - encoder_service - WARNING - Typing encoder model not found at ./models/keystroke_encoder.pt, using placeholder
+2025-08-31 23:53:36,220 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:53:36,220 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:53:36,220 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:53:36,233 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2025-08-31 23:53:36,234 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:54:35,295 - __main__ - INFO - Initializing encoder service...
+2025-08-31 23:54:35,295 - encoder_service - INFO - Motion encoder placeholder initialized (device: cpu)
+2025-08-31 23:54:35,295 - encoder_service - INFO - motion_encoder loaded successfully
+2025-08-31 23:54:35,295 - encoder_service - INFO - Touch encoder placeholder initialized (device: cpu)
+2025-08-31 23:54:35,295 - encoder_service - INFO - touch_encoder loaded successfully
+2025-08-31 23:54:35,296 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-08-31 23:54:35,296 - encoder_service - INFO - typing_encoder loaded successfully
+2025-08-31 23:54:35,296 - __main__ - INFO - Encoder service initialized successfully
+2025-08-31 23:54:35,296 - __main__ - INFO - Starting Flask application...
+2025-08-31 23:54:35,311 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.1.5:5002
+2025-08-31 23:54:35,311 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 23:54:43,062 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:54:43] "GET /health HTTP/1.1" 200 -
+2025-08-31 23:54:47,978 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:54:47] "GET /status HTTP/1.1" 200 -
+2025-08-31 23:54:59,159 - validators - ERROR - Motion data validation failed: Motion data array must be 2D (sequence_length, features)
+2025-08-31 23:54:59,159 - __main__ - WARNING - Motion encoding validation error: Motion data validation failed: Motion data array must be 2D (sequence_length, features)
+2025-08-31 23:54:59,160 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:54:59] "[31m[1mPOST /encode/motion HTTP/1.1[0m" 400 -
+2025-08-31 23:55:29,747 - encoder_service - WARNING - Using placeholder motion encoder - returning dummy embedding
+2025-08-31 23:55:29,750 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:55:29] "POST /encode/motion HTTP/1.1" 200 -
+2025-08-31 23:55:35,168 - validators - ERROR - Gesture data validation failed: Point 0 missing required field: distance
+2025-08-31 23:55:35,169 - __main__ - WARNING - Gesture encoding validation error: Gesture data validation failed: Point 0 missing required field: distance
+2025-08-31 23:55:35,169 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:55:35] "[31m[1mPOST /encode/gesture HTTP/1.1[0m" 400 -
+2025-08-31 23:55:59,502 - encoder_service - WARNING - Using placeholder touch encoder - returning dummy embedding
+2025-08-31 23:55:59,502 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:55:59] "POST /encode/gesture HTTP/1.1" 200 -
+2025-08-31 23:56:04,748 - validators - ERROR - Typing data validation failed: Keystroke 0 missing required field: character
+2025-08-31 23:56:04,749 - __main__ - WARNING - Typing encoding validation error: Typing data validation failed: Keystroke 0 missing required field: character
+2025-08-31 23:56:04,749 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:56:04] "[31m[1mPOST /encode/typing HTTP/1.1[0m" 400 -
+2025-08-31 23:56:36,070 - encoder_service - WARNING - Using placeholder typing encoder - returning dummy embedding
+2025-08-31 23:56:36,071 - werkzeug - INFO - 127.0.0.1 - - [31/Aug/2025 23:56:36] "POST /encode/typing HTTP/1.1" 200 -
+2025-09-02 07:25:08,890 - __main__ - INFO - Initializing encoder service...
+2025-09-02 07:25:09,014 - encoder_service - ERROR - Error loading motion encoder: Error(s) in loading state_dict for IMUEncoderOnly:
+	Unexpected key(s) in state_dict: "decoder.embedding_to_hidden.weight", "decoder.embedding_to_hidden.bias", "decoder.embedding_to_cell.weight", "decoder.embedding_to_cell.bias", "decoder.lstm.weight_ih_l0", "decoder.lstm.weight_hh_l0", "decoder.lstm.bias_ih_l0", "decoder.lstm.bias_hh_l0", "decoder.lstm.weight_ih_l1", "decoder.lstm.weight_hh_l1", "decoder.lstm.bias_ih_l1", "decoder.lstm.bias_hh_l1", "decoder.output_projection.weight", "decoder.output_projection.bias". 
+2025-09-02 07:25:09,016 - encoder_service - INFO - motion_encoder loaded successfully
+2025-09-02 07:25:09,016 - encoder_service - WARNING - Touch encoder model not found at models/touch_encoder/gesture_encoder.pt, using placeholder
+2025-09-02 07:25:09,016 - encoder_service - INFO - touch_encoder loaded successfully
+2025-09-02 07:25:09,016 - encoder_service - WARNING - KeystrokeEncoder class not available, using placeholder
+2025-09-02 07:25:09,016 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-09-02 07:25:09,017 - encoder_service - INFO - typing_encoder loaded successfully
+2025-09-02 07:25:09,017 - __main__ - INFO - Encoder service initialized successfully
+2025-09-02 07:25:09,017 - __main__ - INFO - Starting Flask application...
+2025-09-02 07:25:09,042 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.22.83.80:5002
+2025-09-02 07:25:09,042 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-02 07:26:04,498 - __main__ - INFO - Initializing encoder service...
+2025-09-02 07:26:04,573 - encoder_service - INFO - Successfully loaded real motion encoder from models/motion_encoder/model.pth
+2025-09-02 07:26:04,574 - encoder_service - INFO - motion_encoder loaded successfully
+2025-09-02 07:26:04,574 - encoder_service - WARNING - Touch encoder model not found at models/touch_encoder/gesture_encoder.pt, using placeholder
+2025-09-02 07:26:04,575 - encoder_service - INFO - touch_encoder loaded successfully
+2025-09-02 07:26:04,575 - encoder_service - WARNING - KeystrokeEncoder class not available, using placeholder
+2025-09-02 07:26:04,575 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-09-02 07:26:04,575 - encoder_service - INFO - typing_encoder loaded successfully
+2025-09-02 07:26:04,576 - __main__ - INFO - Encoder service initialized successfully
+2025-09-02 07:26:04,576 - __main__ - INFO - Starting Flask application...
+2025-09-02 07:26:04,595 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.22.83.80:5002
+2025-09-02 07:26:04,595 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-02 07:26:36,605 - __main__ - INFO - Initializing encoder service...
+2025-09-02 07:26:36,678 - encoder_service - INFO - Successfully loaded real motion encoder from models/motion_encoder/model.pth
+2025-09-02 07:26:36,678 - encoder_service - INFO - motion_encoder loaded successfully
+2025-09-02 07:26:36,753 - encoder_service - INFO - Successfully loaded real touch encoder from models/touch_encoder/model.pth
+2025-09-02 07:26:36,753 - encoder_service - INFO - touch_encoder loaded successfully
+2025-09-02 07:26:36,754 - encoder_service - WARNING - KeystrokeEncoder class not available, using placeholder
+2025-09-02 07:26:36,754 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-09-02 07:26:36,754 - encoder_service - INFO - typing_encoder loaded successfully
+2025-09-02 07:26:36,755 - __main__ - INFO - Encoder service initialized successfully
+2025-09-02 07:26:36,755 - __main__ - INFO - Starting Flask application...
+2025-09-02 07:26:36,781 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.22.83.80:5002
+2025-09-02 07:26:36,782 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-02 07:27:18,900 - __main__ - INFO - Initializing encoder service...
+2025-09-02 07:27:18,957 - encoder_service - INFO - Successfully loaded real motion encoder from models/motion_encoder/model.pth
+2025-09-02 07:27:18,958 - encoder_service - INFO - motion_encoder loaded successfully
+2025-09-02 07:27:18,989 - encoder_service - INFO - Successfully loaded real touch encoder from models/touch_encoder/model.pth
+2025-09-02 07:27:18,989 - encoder_service - INFO - touch_encoder loaded successfully
+2025-09-02 07:27:18,989 - encoder_service - WARNING - KeystrokeEncoder class not available, using placeholder
+2025-09-02 07:27:18,990 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-09-02 07:27:18,990 - encoder_service - INFO - typing_encoder loaded successfully
+2025-09-02 07:27:18,990 - __main__ - INFO - Encoder service initialized successfully
+2025-09-02 07:27:18,990 - __main__ - INFO - Starting Flask application...
+2025-09-02 07:27:19,017 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.22.83.80:5002
+2025-09-02 07:27:19,018 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
