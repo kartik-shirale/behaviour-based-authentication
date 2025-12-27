@@ -1,4 +1,5 @@
 // Firebase configuration for native Android app
+// This is test configuration. Replace with production config when ready
 export const firebaseConfig = {
   apiKey: "AIzaSyBR6B0nypfJDjqgElxnWkMaeIi2z4idjDI",
   authDomain: "banking-security-b7579.firebaseapp.com",
