@@ -1,3 +1,181 @@
-node_modules/   
+# =============================================================================
+# SENTINEL - Root .gitignore
+# =============================================================================
 
+# -----------------------------------------------------------------------------
+# Dependencies
+# -----------------------------------------------------------------------------
+node_modules/
+.pnp/
+.pnp.js
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.venv/
+ENV/
+env/
+.env
+
+# PyTorch / ML Models
+*.pth
+*.pt
+*.onnx
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+checkpoints/
+runs/
+logs/
+tensorboard/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# -----------------------------------------------------------------------------
+# React Native / Expo
+# -----------------------------------------------------------------------------
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native builds (CNG - Continuous Native Generation)
+/android
+/ios
+banking-app/android/
+banking-app/ios/
+
+# Native files
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro bundler
+.metro-health-check*
+
+# -----------------------------------------------------------------------------
+# IDE & Editors
+# -----------------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# -----------------------------------------------------------------------------
+# OS Generated
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# -----------------------------------------------------------------------------
+# Debug & Logs
+# -----------------------------------------------------------------------------
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+app.log
+debug.log
+error.log
+
+# -----------------------------------------------------------------------------
+# Environment & Secrets
+# -----------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.pem
+secrets/
+credentials/
+
+# Firebase config (keep templates, ignore actual)
+google-services.json
+GoogleService-Info.plist
+
+# -----------------------------------------------------------------------------
+# Build & Cache
+# -----------------------------------------------------------------------------
+*.tsbuildinfo
+.cache/
+.parcel-cache/
+.next/
+out/
+coverage/
+.nyc_output/
+
+# Docker
+docker-compose.override.yml
+
+# -----------------------------------------------------------------------------
+# Testing
+# -----------------------------------------------------------------------------
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# -----------------------------------------------------------------------------
+# Temporary & Misc
+# -----------------------------------------------------------------------------
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+.history/
+
+# Data files (large datasets)
+*.csv
+*.json.gz
+data/
+datasets/
+
+# But keep example/config files
+!config_example.yaml
+!**/example_*.json
