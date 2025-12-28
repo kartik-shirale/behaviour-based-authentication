@@ -20,7 +20,6 @@
 
 ## 🎯 Problem Statement
 
-
 Digital banking faces escalating fraud threats:
 
 - **Impersonated Registrations**: Fraudsters pose as officials to steal credentials
@@ -50,7 +49,7 @@ flowchart TD
         B --> D[Touch Patterns<br/>Swipe velocity, pressure, gestures]
         B --> E[Motion Patterns<br/>Device handling, orientation]
     end
-    
+
     subgraph ML["🧠 ML Processing (Python/PyTorch)"]
         C --> F[Keystroke Encoder<br/>Bidirectional LSTM]
         D --> G[Touch Encoder<br/>LSTM Autoencoder]
@@ -59,7 +58,7 @@ flowchart TD
         G --> I
         H --> I
     end
-    
+
     subgraph AUTH["🔐 Authentication (Backend)"]
         I --> J[Vector Database<br/>Store User Fingerprints]
         J --> K[Cosine Similarity<br/>Compare with stored patterns]
@@ -158,29 +157,30 @@ hack-the-winter/
 
 ### ✅ Completed Components
 
-| Component | Technology | Status | Description |
-|-----------|------------|--------|-------------|
-| **Mobile App** | React Native + Expo | ✅ Done | Full banking UI with behavioral data collection |
-| **Data Collection** | Native Modules | ✅ Done | Touch, typing, and motion pattern capture |
-| **Keystroke Encoder** | PyTorch BiLSTM | ✅ Trained | 256-dim embeddings from typing patterns |
-| **Motion Encoder** | PyTorch LSTM | ✅ Trained | 256-dim embeddings from device motion |
-| **Touch Encoder** | PyTorch LSTM | ✅ Trained | 256-dim embeddings from gestures |
-| **ML API Service** | FastAPI | ✅ Done | REST endpoints for encoding data |
-| **Authentication Flow** | Firebase + OTP | ✅ Done | OTP, PIN, biometric authentication |
+| Component               | Technology          | Status     | Description                                     |
+| ----------------------- | ------------------- | ---------- | ----------------------------------------------- |
+| **Mobile App**          | React Native + Expo | ✅ Done    | Full banking UI with behavioral data collection |
+| **Data Collection**     | Native Modules      | ✅ Done    | Touch, typing, and motion pattern capture       |
+| **Keystroke Encoder**   | PyTorch BiLSTM      | ✅ Trained | 256-dim embeddings from typing patterns         |
+| **Motion Encoder**      | PyTorch LSTM        | ✅ Trained | 256-dim embeddings from device motion           |
+| **Touch Encoder**       | PyTorch LSTM        | ✅ Trained | 256-dim embeddings from gestures                |
+| **ML API Service**      | FastAPI             | ✅ Done    | REST endpoints for encoding data                |
+| **Authentication Flow** | Firebase + OTP      | ✅ Done    | OTP, PIN, biometric authentication              |
 
 ### 🔄 In Progress
 
-| Component | Technology | Status | Description |
-|-----------|------------|--------|-------------|
-| **Backend API** | Node.js + Express | 🔄 Pending | Central API gateway and business logic |
-| **Vector Database** | Pinecone/Qdrant | 🔄 Pending | Store and query user embeddings |
-| **Full Integration** | End-to-End | 🔄 Pending | Connect all components |
+| Component            | Technology        | Status     | Description                            |
+| -------------------- | ----------------- | ---------- | -------------------------------------- |
+| **Backend API**      | Node.js + Express | 🔄 Pending | Central API gateway and business logic |
+| **Vector Database**  | Pinecone/Qdrant   | 🔄 Pending | Store and query user embeddings        |
+| **Full Integration** | End-to-End        | 🔄 Pending | Connect all components                 |
 
 ---
 
 ## 🎬 Demo Videos
 
 ### 📱 Behavioral Data Capture
+
 <p align="center">
   <a href="https://youtu.be/FmlQinb-zNs">
     <img src="https://img.youtube.com/vi/FmlQinb-zNs/maxresdefault.jpg" alt="Behavioral Data Capture Demo" width="600"/>
@@ -192,6 +192,7 @@ hack-the-winter/
 ---
 
 ### 🧠 ML Models in Action
+
 <p align="center">
   <a href="https://youtu.be/_rGrI4-Q5ZQ">
     <img src="https://img.youtube.com/vi/_rGrI4-Q5ZQ/maxresdefault.jpg" alt="ML Models Demo" width="600"/>
@@ -202,11 +203,10 @@ hack-the-winter/
 
 ---
 
-
 ## 🛠️ Tech Stack
 
-
 ### Mobile Application
+
 - **Framework**: React Native 0.79.5 with Expo SDK 53
 - **Styling**: NativeWind (TailwindCSS for RN)
 - **Navigation**: Expo Router (file-based routing)
@@ -214,12 +214,14 @@ hack-the-winter/
 - **Biometrics**: expo-local-authentication
 
 ### ML/AI Services
+
 - **Framework**: PyTorch
 - **Models**: Bidirectional LSTM Encoders
 - **API**: FastAPI/Flask
 - **Deployment**: Docker, Gunicorn
 
 ### Backend (Planned)
+
 - **Runtime**: Node.js with TypeScript
 - **Framework**: Express.js
 - **Database**: Firebase Firestore + Vector DB
@@ -244,7 +246,7 @@ class KeystrokeEncoder(nn.Module):
             dropout=0.3
         )
         self.fc = nn.Linear(512, 256)  # Output 256-dim vector
-    
+
     def forward(self, chars, dwell_time, flight_time, x, y):
         # Generate unique 256-dim embedding for user's typing pattern
         ...
@@ -273,23 +275,23 @@ sequenceDiagram
     participant BE as Backend
     participant ML as ML Service
     participant DB as Vector DB
-    
+
     Note over U,DB: New Login Detected
-    
+
     U->>App: Enter credentials
     App->>BE: Submit credentials + OTP
     BE->>BE: Verify OTP ✓
-    
+
     Note over App,ML: Behavioral Analysis During Captcha
-    
+
     App->>App: Collect typing/touch/motion data
     App->>ML: Send behavioral data
     ML->>ML: Generate 256-dim embedding
     ML->>BE: Return embedding vector
-    
+
     BE->>DB: Fetch stored user embedding
     BE->>BE: Calculate cosine similarity
-    
+
     alt Similarity > 85%
         BE->>App: ✅ Access Granted
     else Similarity < 85%
@@ -357,13 +359,13 @@ curl -X POST http://localhost:5000/encode/typing \
 
 ## 📊 Model Performance
 
-| Encoder | Architecture | Output Dim | Accuracy* | F1-Score |
-|---------|--------------|------------|-----------|----------|
-| Keystroke | Bidirectional LSTM | 256 | 71.3% | 0.68 |
-| Motion | LSTM Autoencoder | 256 | 53.7% | 0.51 |
-| Touch | LSTM Autoencoder | 256 | 68.2% | 0.65 |
+| Encoder   | Architecture       | Output Dim | Accuracy\* | F1-Score |
+| --------- | ------------------ | ---------- | ---------- | -------- |
+| Keystroke | Bidirectional LSTM | 256        | 71.3%      | 0.68     |
+| Motion    | LSTM Autoencoder   | 256        | 53.7%      | 0.51     |
+| Touch     | LSTM Autoencoder   | 256        | 68.2%      | 0.65     |
 
-*Accuracy measured on internal test dataset for user verification task. Models are in early training phase with limited data; performance expected to improve with more diverse training samples.
+\*Accuracy measured on internal test dataset for user verification task. Models are in early training phase with limited data; performance expected to improve with more diverse training samples.
 
 ---
 
@@ -372,21 +374,25 @@ curl -X POST http://localhost:5000/encode/typing \
 ### Planned Enhancements
 
 1. **Complete Backend Integration**
+
    - Node.js/Express API gateway
    - Vector database (Pinecone/Qdrant) for embeddings
    - Real-time risk scoring engine
 
 2. **Enhanced Security**
+
    - SIM swap detection via telecom integration
    - VPN/proxy detection
    - Geolocation anomaly detection
 
 3. **Scalability**
+
    - Kubernetes deployment
    - Horizontal scaling for ML inference
    - CDN for global distribution
 
 4. **Failure Handling**
+
    - Circuit breaker patterns
    - Graceful degradation
    - Automatic failover
@@ -430,30 +436,43 @@ curl -X POST http://localhost:5000/encode/typing \
 
 ## 🔧 Failure Handling
 
-| Failure Type | Detection | Recovery |
-|--------------|-----------|----------|
-| ML Service Down | Health check timeout | Fallback to rule-based scoring |
-| High Latency | Response >500ms | Queue request, notify user |
-| Database Unavailable | Connection error | Local cache fallback |
-| Invalid Embedding | Dimension mismatch | Re-request with validation |
-| Network Partition | Heartbeat failure | Retry with exponential backoff |
+| Failure Type         | Detection            | Recovery                       |
+| -------------------- | -------------------- | ------------------------------ |
+| ML Service Down      | Health check timeout | Fallback to rule-based scoring |
+| High Latency         | Response >500ms      | Queue request, notify user     |
+| Database Unavailable | Connection error     | Local cache fallback           |
+| Invalid Embedding    | Dimension mismatch   | Re-request with validation     |
+| Network Partition    | Heartbeat failure    | Retry with exponential backoff |
 
 ---
 
 ## 👥 Team Contributions
 
-| Team Member | Role | Contributions |
-|-------------|------|---------------|
-| **Kartik** | Project Lead & ML Engineer | Project architecture, ML model design & training, React Native app development, scalability planning |
-| **Pragti** | Co-Lead & ML Specialist | ML pipeline development, model optimization, training infrastructure |
-| **Priyanka** | UI/UX & System Design | App design, system architecture, performance optimization, documentation |
-| **Ajay** | Backend Developer | Node.js/Express backend development (in progress), API integration, database design |
+> 📝 **Note**: This repository consolidates our final submission. Active development was done across separate feature branches with individual commit histories.
+
+### 📊 Contribution Breakdown
+
+| Team Member  | ML/AI | App Dev | Backend | Docs  | Overall |
+| ------------ | ----- | ------- | ------- | ----- | ------- |
+| **Kartik**   | 40%   | 30%     | 10%     | 35%   | ~29%    |
+| **Pragti**   | 40%   | 5%      | 5%      | 15%   | ~16%    |
+| **Priyanka** | 10%   | 35%     | 5%      | 35%   | ~21%    |
+| **Ajay**     | 10%   | 30%     | 80%     | 15%   | ~34%    |
+
+```
+Kartik   ████████████████████████░░░░░░ 29%
+Pragti   ███████████░░░░░░░░░░░░░░░░░░░ 16%
+Priyanka ██████████████░░░░░░░░░░░░░░░░ 21%
+Ajay     ██████████████████████████░░░░ 34%
+```
 
 ### Work Distribution
+
 - **ML Models (Completed)**: Kartik & Pragti
-- **Mobile App (Completed)**: Kartik & Ajay  
+- **Mobile App (Completed)**: Kartik, Priyanka & Ajay
 - **Backend (In Progress)**: Ajay
-- **Scalability & Performance**: Kartik & Priyanka
+- **Documentation & Architecture**: Kartik & Priyanka
+
 
 ---
 
