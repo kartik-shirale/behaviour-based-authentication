@@ -452,12 +452,12 @@ curl -X POST http://localhost:5000/encode/typing \
 
 ### 📊 Contribution Breakdown
 
-| Team Member  | ML/AI | App Dev | Backend | Docs  | Overall |
-| ------------ | ----- | ------- | ------- | ----- | ------- |
-| **Kartik**   | 40%   | 30%     | 10%     | 35%   | ~29%    |
-| **Pragti**   | 40%   | 5%      | 5%      | 15%   | ~16%    |
-| **Priyanka** | 10%   | 35%     | 5%      | 35%   | ~21%    |
-| **Ajay**     | 10%   | 30%     | 80%     | 15%   | ~34%    |
+| Team Member  | ML/AI | App Dev | Backend | Docs | Overall |
+| ------------ | ----- | ------- | ------- | ---- | ------- |
+| **Kartik**   | 40%   | 30%     | 10%     | 35%  | ~29%    |
+| **Pragti**   | 40%   | 5%      | 5%      | 15%  | ~16%    |
+| **Priyanka** | 10%   | 35%     | 5%      | 35%  | ~21%    |
+| **Ajay**     | 10%   | 30%     | 80%     | 15%  | ~34%    |
 
 ```
 Kartik   ████████████████████████░░░░░░ 29%
@@ -472,7 +472,6 @@ Ajay     ███████████████████████�
 - **Mobile App (Completed)**: Kartik, Priyanka & Ajay
 - **Backend (In Progress)**: Ajay
 - **Documentation & Architecture**: Kartik & Priyanka
-
 
 ---
 
