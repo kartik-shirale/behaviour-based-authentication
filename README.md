@@ -444,7 +444,7 @@ curl -X POST http://localhost:5000/encode/typing \
 
 | Team Member | Role | Contributions |
 |-------------|------|---------------|
-| **Kartik** | Project Lead & ML Engineer | Project architecture, ML model design & training, React Native app development, scalability planning |
+| **Kartik** | Project Lead & ML Specialist | Project architecture, ML model design & training, React Native app development, scalability planning |
 | **Pragti** | Co-Lead & ML Specialist | ML pipeline development, model optimization, training infrastructure |
 | **Priyanka** | UI/UX & System Design | App design, system architecture, performance optimization, documentation |
 | **Ajay** | Backend Developer | Node.js/Express backend development (in progress), API integration, database design |
