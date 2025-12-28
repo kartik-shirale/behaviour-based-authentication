@@ -82,25 +82,54 @@ Returns detailed service information including model status and configuration.
 ```bash
 POST /encode/motion
 Content-Type: application/json
+```
 
+**Format 1: Dictionary with Sensor Keys (Recommended)**
+```json
 {
   "data": {
-    "accel_x": [0.1, 0.2, 0.3],
-    "accel_y": [0.4, 0.5, 0.6],
-    "accel_z": [0.7, 0.8, 0.9],
-    "gyro_x": [0.01, 0.02, 0.03],
-    "gyro_y": [0.04, 0.05, 0.06],
-    "gyro_z": [0.07, 0.08, 0.09],
-    "mag_x": [0.1, 0.1, 0.1],
-    "mag_y": [0.2, 0.2, 0.2],
-    "mag_z": [0.3, 0.3, 0.3],
-    "motion_magnitude": [0.85, 0.92, 0.88],
-    "rotation_rate": [0.15, 0.18, 0.16]
+    "accelerometer": [
+      [0.1, 0.2, 9.8],
+      [0.15, 0.18, 9.7],
+      [0.12, 0.22, 9.75]
+    ],
+    "gyroscope": [
+      [0.01, 0.02, 0.03],
+      [0.02, 0.01, 0.04],
+      [0.015, 0.025, 0.035]
+    ],
+    "magnetometer": [
+      [25.5, 30.2, -15.0],
+      [25.6, 30.1, -15.1],
+      [25.55, 30.15, -15.05]
+    ]
   }
+}
+```
+Each sensor array must have shape `(sequence_length, 3)` for X, Y, Z values.
+
+**Format 2: 2D Array with 11 Features**
+```json
+{
+  "data": [
+    [0.1, 0.2, 9.8, 0.01, 0.02, 0.03, 25.5, 30.2, -15.0, 9.82, 0.04],
+    [0.15, 0.18, 9.7, 0.02, 0.01, 0.04, 25.6, 30.1, -15.1, 9.75, 0.05]
+  ]
+}
+```
+Feature order: `accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z, motion_magnitude, rotation_rate`
+
+**Response:**
+```json
+{
+  "status": "success",
+  "embedding": [0.123, -0.456, ...],  // 256-dimensional vector
+  "embedding_dim": 256
 }
 ```
 
 #### Gesture Encoding
+
 ```bash
 POST /encode/gesture
 Content-Type: application/json

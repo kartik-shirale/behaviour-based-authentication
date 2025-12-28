@@ -18,10 +18,11 @@
 
 ---
 
-
 ## 🎯 Problem Statement
 
+
 Digital banking faces escalating fraud threats:
+
 - **Impersonated Registrations**: Fraudsters pose as officials to steal credentials
 - **SIM Swap Attacks**: Hackers hijack phone numbers to bypass OTPs
 - **Credential Theft**: Phishing and vishing compromise traditional passwords/PINs
@@ -177,7 +178,33 @@ hack-the-winter/
 
 ---
 
+## 🎬 Demo Videos
+
+### 📱 Behavioral Data Capture
+<p align="center">
+  <a href="https://youtu.be/FmlQinb-zNs">
+    <img src="https://img.youtube.com/vi/FmlQinb-zNs/maxresdefault.jpg" alt="Behavioral Data Capture Demo" width="600"/>
+  </a>
+</p>
+
+> Real-time capture of typing patterns, touch gestures, and motion data — all happening seamlessly in the background without user intervention.
+
+---
+
+### 🧠 ML Models in Action
+<p align="center">
+  <a href="https://youtu.be/_rGrI4-Q5ZQ">
+    <img src="https://img.youtube.com/vi/_rGrI4-Q5ZQ/maxresdefault.jpg" alt="ML Models Demo" width="600"/>
+  </a>
+</p>
+
+> Demonstrates how the trained LSTM encoders process behavioral data and generate 256-dimensional embeddings for user verification.
+
+---
+
+
 ## 🛠️ Tech Stack
+
 
 ### Mobile Application
 - **Framework**: React Native 0.79.5 with Expo SDK 53

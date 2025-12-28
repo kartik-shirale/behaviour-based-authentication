@@ -227,3 +227,58 @@
  * Running on http://127.0.0.1:5002
  * Running on http://172.22.83.80:5002
 2025-09-02 07:27:19,018 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-28 14:13:12,773 - __main__ - INFO - Initializing encoder service...
+2025-12-28 14:13:12,774 - encoder_service - WARNING - IMUMotionEncoder class not available, using placeholder
+2025-12-28 14:13:12,774 - encoder_service - INFO - Motion encoder placeholder initialized (device: cpu)
+2025-12-28 14:13:12,775 - encoder_service - INFO - motion_encoder loaded successfully
+2025-12-28 14:13:12,775 - encoder_service - WARNING - GestureInference class not available, using placeholder
+2025-12-28 14:13:12,775 - encoder_service - INFO - Touch encoder placeholder initialized (device: cpu)
+2025-12-28 14:13:12,775 - encoder_service - INFO - touch_encoder loaded successfully
+2025-12-28 14:13:12,775 - encoder_service - WARNING - KeystrokeEncoder class not available, using placeholder
+2025-12-28 14:13:12,776 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-12-28 14:13:12,776 - encoder_service - INFO - typing_encoder loaded successfully
+2025-12-28 14:13:12,776 - __main__ - INFO - Encoder service initialized successfully
+2025-12-28 14:13:12,776 - __main__ - INFO - Starting Flask application...
+2025-12-28 14:13:12,835 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.1.5:5002
+2025-12-28 14:13:12,836 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-28 14:20:13,631 - werkzeug - INFO - 127.0.0.1 - - [28/Dec/2025 14:20:13] "[33mGET / HTTP/1.1[0m" 404 -
+2025-12-28 14:20:13,890 - werkzeug - INFO - 127.0.0.1 - - [28/Dec/2025 14:20:13] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-12-28 14:20:47,785 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:20:47] "[33mGET / HTTP/1.1[0m" 404 -
+2025-12-28 14:20:47,941 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:20:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-12-28 14:20:56,860 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:20:56] "[33mGET /helght HTTP/1.1[0m" 404 -
+2025-12-28 14:21:35,140 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:21:35] "GET /status HTTP/1.1" 200 -
+2025-12-28 14:23:26,576 - validators - ERROR - Motion data validation failed: Motion data dict must contain keys: ['accelerometer', 'gyroscope', 'magnetometer']
+2025-12-28 14:23:26,576 - __main__ - WARNING - Motion encoding validation error: Motion data validation failed: Motion data dict must contain keys: ['accelerometer', 'gyroscope', 'magnetometer']
+2025-12-28 14:23:26,578 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:23:26] "[31m[1mPOST /encode/motion HTTP/1.1[0m" 400 -
+2025-12-28 14:24:52,161 - encoder_service - WARNING - Using placeholder touch encoder - returning dummy embedding
+2025-12-28 14:24:52,170 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:24:52] "POST /encode/gesture HTTP/1.1" 200 -
+2025-12-28 14:30:26,752 - encoder_service - WARNING - Using placeholder motion encoder - returning dummy embedding
+2025-12-28 14:30:26,753 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:30:26] "POST /encode/motion HTTP/1.1" 200 -
+2025-12-28 14:30:56,463 - encoder_service - WARNING - Using placeholder typing encoder - returning dummy embedding
+2025-12-28 14:30:56,464 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:30:56] "POST /encode/typing HTTP/1.1" 200 -
+2025-12-28 14:36:00,371 - __main__ - INFO - Initializing encoder service...
+2025-12-28 14:36:00,373 - encoder_service - WARNING - IMUMotionEncoder class not available, using placeholder
+2025-12-28 14:36:00,373 - encoder_service - INFO - Motion encoder placeholder initialized (device: cpu)
+2025-12-28 14:36:00,373 - encoder_service - INFO - motion_encoder loaded successfully
+2025-12-28 14:36:00,373 - encoder_service - WARNING - GestureInference class not available, using placeholder
+2025-12-28 14:36:00,373 - encoder_service - INFO - Touch encoder placeholder initialized (device: cpu)
+2025-12-28 14:36:00,373 - encoder_service - INFO - touch_encoder loaded successfully
+2025-12-28 14:36:00,373 - encoder_service - WARNING - KeystrokeEncoder class not available, using placeholder
+2025-12-28 14:36:00,375 - encoder_service - INFO - Typing encoder placeholder initialized (device: cpu)
+2025-12-28 14:36:00,375 - encoder_service - INFO - typing_encoder loaded successfully
+2025-12-28 14:36:00,375 - __main__ - INFO - Encoder service initialized successfully
+2025-12-28 14:36:00,375 - __main__ - INFO - Starting Flask application...
+2025-12-28 14:36:00,399 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.1.5:5002
+2025-12-28 14:36:00,399 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-28 14:36:19,859 - encoder_service - WARNING - Using placeholder touch encoder - returning dummy embedding
+2025-12-28 14:36:19,860 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:36:19] "POST /encode/gesture HTTP/1.1" 200 -
+2025-12-28 14:36:43,573 - encoder_service - WARNING - Using placeholder typing encoder - returning dummy embedding
+2025-12-28 14:36:43,573 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:36:43] "POST /encode/typing HTTP/1.1" 200 -
+2025-12-28 14:36:58,474 - encoder_service - WARNING - Using placeholder motion encoder - returning dummy embedding
+2025-12-28 14:36:58,474 - werkzeug - INFO - 192.168.1.5 - - [28/Dec/2025 14:36:58] "POST /encode/motion HTTP/1.1" 200 -
