@@ -9,10 +9,6 @@ export default function ProfileScreen() {
   const { user, logout } = useUserStore();
 
 
-  // const hasValidUserData = useMemo(() => {
-  //   return !!(user?.fullName && user?.mobile);
-  // }, [user?.fullName, user?.mobile]);
-
   const handleShareProfile = useCallback(async () => {
     if (!user?.fullName || !user?.mobile) return;
 
@@ -102,15 +98,7 @@ export default function ProfileScreen() {
           <Text className="text-white text-lg font-bold mb-4">Share Payment Details</Text>
           <View className="items-center py-4">
             <View className="w-16 h-16 bg-zinc-900 border border-zinc-800/50 rounded-full items-center justify-center mb-4 overflow-hidden">
-              {/* {user?.profile ? (
-                <Image 
-                  source={{ uri: user.profile }} 
-                  className="w-full h-full" 
-                  style={{ resizeMode: 'cover' }}
-                />
-              ) : ( */}
               <Upload size={32} color="#9333ea" />
-              {/* )} */}
             </View>
             <Text className="text-white font-medium text-center mb-2">
               Share Your Payment Information
@@ -187,8 +175,8 @@ export default function ProfileScreen() {
 
         {/* App Info */}
         <View className="items-center py-4">
-          <Text className="text-gray-500 text-sm">Banking App v1.0.0</Text>
-          <Text className="text-gray-600 text-xs mt-1">Secure • Fast • Reliable</Text>
+          <Text className="text-gray-500 text-sm">Sentinel v1.0.0</Text>
+          <Text className="text-gray-600 text-xs mt-1">Secure • Biometric • Private</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
