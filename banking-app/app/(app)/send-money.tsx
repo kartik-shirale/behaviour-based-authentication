@@ -186,7 +186,7 @@ export default function SendMoneyScreen() {
         recipientName,
         recipientMobile: formattedMobileNumber,
         transactionId: transactionRef,
-        message: recipientUser 
+        message: recipientUser
           ? 'Your money has been sent successfully'
           : 'Payment sent (recipient not in system)',
         recipientFound: !!recipientUser
@@ -527,8 +527,9 @@ export default function SendMoneyScreen() {
               <View className="flex-row items-center justify-center">
                 <View className="w-2 h-2 bg-green-500 rounded-full mr-2" />
                 <Text className="text-zinc-300 text-sm font-medium text-center">
-                  Safe & Secure Payments with Sential
+                  Safe & Secure Payments with Sentinel
                 </Text>
+
               </View>
               <Text className="text-zinc-500 text-xs text-center mt-2">
                 Your transaction is protected with bank-grade security

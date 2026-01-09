@@ -414,12 +414,8 @@ export default function PinAuthScreen() {
               )}
             </View>
           )}
-          {/* {user?.fullName && (
-            <Text className="text-gray-300 text-sm mt-2 font-medium">
-              Hi, {user.fullName.split(' ')[0]}!
-            </Text>
-          )} */}
         </View>
+
 
         {renderPinDots()}
         {renderKeypad()}
