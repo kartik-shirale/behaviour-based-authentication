@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import logging
 import os
+import time
 from datetime import datetime
 import traceback
 
@@ -9,6 +12,8 @@ import traceback
 from config import Config
 from encoder_service import EncoderService, ModelNotLoadedException, InvalidInputException
 from validators import InputValidator, ValidationError, RequestValidator
+from metrics import metrics, track_request
+from cache_manager import init_cache, get_cache
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -17,6 +22,27 @@ CORS(app)  # Enable CORS for all routes
 # Load configuration
 config = Config('config.yaml')
 app.config.update(config.get_flask_config())
+
+# Initialize rate limiter
+rate_limit_enabled = config.get('scalability.rate_limit.enabled', True)
+requests_per_minute = config.get('scalability.rate_limit.requests_per_minute', 100)
+batch_requests_per_minute = config.get('scalability.rate_limit.batch_requests_per_minute', 20)
+
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    default_limits=[f"{requests_per_minute} per minute"],
+    enabled=rate_limit_enabled,
+    storage_uri="memory://"
+)
+
+# Initialize cache
+cache_config = {
+    'enabled': config.get('scalability.cache.enabled', True),
+    'max_size': config.get('scalability.cache.max_size', 1000),
+    'ttl': config.get('scalability.cache.ttl', 3600)
+}
+init_cache(cache_config)
 
 # Configure logging
 log_level = getattr(logging, config.get('logging.level', 'INFO').upper())
@@ -36,6 +62,7 @@ logger = logging.getLogger(__name__)
 
 # Initialize encoder service
 encoder_service = None
+
 
 def initialize_encoders():
     """Initialize all encoder models"""
@@ -159,12 +186,25 @@ def service_status():
                 'batch_gesture': '/encode/batch/gesture',
                 'batch_typing': '/encode/batch/typing',
                 'health': '/health',
-                'status': '/status'
+                'status': '/status',
+                'metrics': '/metrics'
             },
             'config': {
                 'max_batch_size': config.get('api.max_batch_size', 100),
                 'request_timeout': config.get('api.request_timeout', 30),
                 'cors_enabled': config.get('api.enable_cors', True)
+            },
+            'scalability': {
+                'rate_limiting': {
+                    'enabled': rate_limit_enabled,
+                    'requests_per_minute': requests_per_minute,
+                    'batch_requests_per_minute': batch_requests_per_minute
+                },
+                'caching': {
+                    'enabled': cache_config['enabled'],
+                    'max_size': cache_config['max_size'],
+                    'ttl_seconds': cache_config['ttl']
+                }
             }
         })
         
@@ -177,10 +217,53 @@ def service_status():
             'timestamp': datetime.utcnow().isoformat()
         }), 500
 
+
+@app.route('/metrics', methods=['GET'])
+@limiter.exempt
+def get_metrics():
+    """
+    Get performance metrics and statistics.
+    
+    Returns request counts, latencies, cache stats, and model inference times.
+    """
+    try:
+        metrics_data = metrics.get_metrics()
+        cache_stats = get_cache().get_stats()
+        
+        return jsonify({
+            'status': 'success',
+            'timestamp': datetime.utcnow().isoformat(),
+            'metrics': metrics_data,
+            'cache': cache_stats,
+            'scalability': {
+                'techniques': [
+                    'Rate Limiting (flask-limiter)',
+                    'LRU Caching with TTL',
+                    'Request Metrics & Monitoring',
+                    'Gunicorn Multi-worker Support',
+                    'Connection Pooling'
+                ],
+                'rate_limit': {
+                    'enabled': rate_limit_enabled,
+                    'limit': f"{requests_per_minute} requests/minute"
+                }
+            }
+        })
+    except Exception as e:
+        logger.error(f"Error getting metrics: {str(e)}\n{traceback.format_exc()}")
+        return jsonify({
+            'status': 'error',
+            'message': 'Failed to get metrics',
+            'timestamp': datetime.utcnow().isoformat()
+        }), 500
+
+
 # Motion encoder endpoints
 @app.route('/encode/motion', methods=['POST'])
+@limiter.limit(f"{requests_per_minute} per minute")
 def encode_motion():
     """Encode IMU motion data to vector embedding"""
+
     try:
         # Check if encoder service is available
         if encoder_service is None:

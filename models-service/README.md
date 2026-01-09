@@ -295,12 +295,88 @@ The API handles various error scenarios:
 - Implement authentication/authorization as needed
 - Monitor and log all requests
 
-## Performance
+## Scalability & Performance
+
+### Scalability Techniques
+
+| Technique | Implementation | Purpose |
+|-----------|----------------|---------|
+| **Rate Limiting** | flask-limiter | Prevent API abuse, protect against DDoS |
+| **Request Caching** | LRU Cache with TTL | Reduce redundant model inferences |
+| **Metrics Monitoring** | `/metrics` endpoint | Track performance bottlenecks |
+| **Connection Pooling** | Gunicorn workers | Efficient resource utilization |
+| **Batch Processing** | Batch endpoints | Higher throughput for bulk requests |
+
+### Metrics Endpoint
+
+```bash
+GET /metrics
+```
+
+Returns detailed performance metrics:
+```json
+{
+  "metrics": {
+    "service": { "uptime_seconds": 3600, "uptime_formatted": "1h 0m 0s" },
+    "requests": {
+      "total": 1000,
+      "requests_per_second": 2.5,
+      "active": 5,
+      "peak_active": 15
+    },
+    "latency": {
+      "overall_ms": { "avg": 45.2, "p50": 40, "p95": 120, "p99": 250 }
+    }
+  },
+  "cache": {
+    "caches": {
+      "motion": { "size": 150, "hit_rate_percent": 35.5 },
+      "gesture": { "size": 200, "hit_rate_percent": 42.0 },
+      "typing": { "size": 180, "hit_rate_percent": 38.2 }
+    }
+  }
+}
+```
+
+### Configuration
+
+Add to `config.yaml` to customize scalability settings:
+
+```yaml
+scalability:
+  rate_limit:
+    enabled: true
+    requests_per_minute: 100
+    batch_requests_per_minute: 20
+  
+  cache:
+    enabled: true
+    max_size: 1000      # Max cached embeddings
+    ttl: 3600           # Cache TTL in seconds
+  
+  workers:
+    gunicorn_workers: 4
+    threads_per_worker: 2
+```
+
+### Production Deployment
+
+```bash
+# Start with Gunicorn (recommended)
+gunicorn -w 4 --threads 2 -b 0.0.0.0:5000 app:app
+
+# With rate limiting and caching enabled
+SCALABILITY_RATE_LIMIT_ENABLED=true gunicorn -w 4 app:app
+```
+
+### Performance Tips
 
 - Batch processing is more efficient for multiple samples
 - Models are loaded once at startup for optimal performance
-- Consider using GPU acceleration for large-scale deployments
-- Use a production WSGI server like Gunicorn for deployment
+- Cache embedding results for repeated requests
+- Use GPU acceleration for large-scale deployments
+- Monitor `/metrics` for bottleneck identification
+
 
 ## Troubleshooting
 

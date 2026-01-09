@@ -54,17 +54,31 @@ class Config:
             'api': {
                 'max_batch_size': 100,
                 'request_timeout': 30,
-                'enable_cors': True
+                'enable_cors': True,
+                'max_request_size_mb': 10.0
             },
             'security': {
                 'api_key_required': False,
-                'api_key': None,
+                'api_key': None
+            },
+            'scalability': {
                 'rate_limit': {
-                    'enabled': False,
-                    'requests_per_minute': 60
+                    'enabled': True,
+                    'requests_per_minute': 100,
+                    'batch_requests_per_minute': 20
+                },
+                'cache': {
+                    'enabled': True,
+                    'max_size': 1000,
+                    'ttl': 3600  # 1 hour
+                },
+                'workers': {
+                    'gunicorn_workers': 4,
+                    'threads_per_worker': 2
                 }
             }
         }
+
     
     def _load_from_file(self, config_file: str):
         """Load configuration from YAML file"""

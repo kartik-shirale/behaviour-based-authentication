@@ -2,6 +2,7 @@
 Flask==2.2.5
 Werkzeug==2.2.3
 flask-cors==6.0.1
+Flask-Limiter==3.5.0
 
 # Data processing and ML dependencies
 numpy==1.24.3
