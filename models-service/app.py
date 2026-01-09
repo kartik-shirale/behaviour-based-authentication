@@ -77,6 +77,84 @@ def initialize_encoders():
         logger.error(traceback.format_exc())
         return False
 
+
+def _handle_encode_request(encoder_type: str, validator_func, encode_func, model_name: str):
+    """
+    Generic handler for encode requests to reduce code duplication.
+    
+    Args:
+        encoder_type: Type of encoder ('motion', 'gesture', 'typing')
+        validator_func: Function to validate input data
+        encode_func: Function to encode data
+        model_name: Display name for the model
+    
+    Returns:
+        JSON response tuple (response, status_code)
+    """
+    start_time = time.time()
+    
+    # Check service availability
+    if encoder_service is None:
+        return jsonify({'error': 'Encoder service not available', 'status': 'error'}), 503
+    
+    # Validate content type
+    if not RequestValidator.validate_content_type(request.content_type or ''):
+        return jsonify({'error': 'Invalid content type. Expected application/json', 'status': 'error'}), 400
+    
+    data = request.get_json()
+    if not data or 'data' not in data:
+        return jsonify({'error': 'Missing data field in request', 'status': 'error'}), 400
+    
+    # Validate request size
+    if not RequestValidator.validate_request_size(data, config.get('api.max_request_size_mb', 10.0)):
+        return jsonify({'error': 'Request size too large', 'status': 'error'}), 413
+    
+    # Check cache first
+    cache = get_cache()
+    cached_embedding = cache.get_embedding(encoder_type, data['data'])
+    if cached_embedding is not None:
+        metrics.record_cache_hit()
+        latency_ms = (time.time() - start_time) * 1000
+        metrics.record_request_end(f'encode_{encoder_type}', 200, latency_ms)
+        return jsonify({
+            'embedding': cached_embedding,
+            'dimension': len(cached_embedding),
+            'model_type': model_name,
+            'status': 'success',
+            'cached': True,
+            'timestamp': datetime.utcnow().isoformat()
+        })
+    
+    metrics.record_cache_miss()
+    
+    # Validate and encode
+    validated_data = validator_func(data['data'])
+    
+    # Track inference time
+    inference_start = time.time()
+    embedding = encode_func(validated_data['data'])
+    inference_ms = (time.time() - inference_start) * 1000
+    metrics.record_inference_time(encoder_type, inference_ms)
+    
+    # Sanitize and cache
+    sanitized_embedding = InputValidator.sanitize_output(embedding)
+    cache.set_embedding(encoder_type, data['data'], sanitized_embedding)
+    
+    # Record request metrics
+    latency_ms = (time.time() - start_time) * 1000
+    metrics.record_request_end(f'encode_{encoder_type}', 200, latency_ms)
+    
+    return jsonify({
+        'embedding': sanitized_embedding,
+        'dimension': len(sanitized_embedding),
+        'model_type': model_name,
+        'input_type': validated_data['type'],
+        'status': 'success',
+        'cached': False,
+        'timestamp': datetime.utcnow().isoformat()
+    })
+
+
 # Error handlers
 @app.errorhandler(400)
 def bad_request(error):
@@ -263,242 +341,77 @@ def get_metrics():
 @limiter.limit(f"{requests_per_minute} per minute")
 def encode_motion():
     """Encode IMU motion data to vector embedding"""
-
     try:
-        # Check if encoder service is available
-        if encoder_service is None:
-            return jsonify({
-                'error': 'Encoder service not available',
-                'status': 'error'
-            }), 503
-        
-        # Validate content type
-        if not RequestValidator.validate_content_type(request.content_type or ''):
-            return jsonify({
-                'error': 'Invalid content type. Expected application/json',
-                'status': 'error'
-            }), 400
-        
-        data = request.get_json()
-        
-        if not data or 'data' not in data:
-            return jsonify({
-                'error': 'Missing data field in request',
-                'status': 'error'
-            }), 400
-        
-        # Validate request size
-        if not RequestValidator.validate_request_size(data, config.get('api.max_request_size_mb', 10.0)):
-            return jsonify({
-                'error': 'Request size too large',
-                'status': 'error'
-            }), 413
-        
-        # Validate input data
-        validated_data = InputValidator.validate_motion_data(data['data'])
-        
-        # Encode data using motion encoder
-        embedding = encoder_service.encode_motion(validated_data['data'])
-        
-        # Sanitize output
-        sanitized_embedding = InputValidator.sanitize_output(embedding)
-        
-        return jsonify({
-            'embedding': sanitized_embedding,
-            'dimension': len(sanitized_embedding),
-            'model_type': 'motion_encoder',
-            'input_type': validated_data['type'],
-            'status': 'success',
-            'timestamp': datetime.utcnow().isoformat()
-        })
-    
+        return _handle_encode_request(
+            encoder_type='motion',
+            validator_func=InputValidator.validate_motion_data,
+            encode_func=encoder_service.encode_motion,
+            model_name='motion_encoder'
+        )
     except ValidationError as e:
         logger.warning(f"Motion encoding validation error: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'validation_error'
-        }), 400
-    
+        return jsonify({'error': str(e), 'status': 'validation_error'}), 400
     except ModelNotLoadedException as e:
         logger.error(f"Motion encoder not loaded: {str(e)}")
-        return jsonify({
-            'error': 'Motion encoder not available',
-            'status': 'model_error'
-        }), 503
-    
+        return jsonify({'error': 'Motion encoder not available', 'status': 'model_error'}), 503
     except InvalidInputException as e:
-        logger.error(f"Motion encoding input error: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'input_error'
-        }), 400
-    
+        return jsonify({'error': str(e), 'status': 'input_error'}), 400
     except Exception as e:
         logger.error(f"Motion encoding error: {str(e)}\n{traceback.format_exc()}")
-        return jsonify({
-            'error': 'Internal server error',
-            'status': 'error'
-        }), 500
+        return jsonify({'error': 'Internal server error', 'status': 'error'}), 500
+
 
 # Touch/Gesture encoder endpoints
 @app.route('/encode/gesture', methods=['POST'])
+@limiter.limit(f"{requests_per_minute} per minute")
 def encode_gesture():
     """Encode touch/gesture data to vector embedding"""
     try:
-        # Check if encoder service is available
-        if encoder_service is None:
-            return jsonify({
-                'error': 'Encoder service not available',
-                'status': 'error'
-            }), 503
-        
-        # Validate content type
-        if not RequestValidator.validate_content_type(request.content_type or ''):
-            return jsonify({
-                'error': 'Invalid content type. Expected application/json',
-                'status': 'error'
-            }), 400
-        
-        data = request.get_json()
-        
-        if not data or 'data' not in data:
-            return jsonify({
-                'error': 'Missing data field in request',
-                'status': 'error'
-            }), 400
-        
-        # Validate request size
-        if not RequestValidator.validate_request_size(data, config.get('api.max_request_size_mb', 10.0)):
-            return jsonify({
-                'error': 'Request size too large',
-                'status': 'error'
-            }), 413
-        
-        # Validate input data
-        validated_data = InputValidator.validate_gesture_data(data['data'])
-        
-        # Encode data using gesture encoder
-        embedding = encoder_service.encode_gesture(validated_data['data'])
-        
-        # Sanitize output
-        sanitized_embedding = InputValidator.sanitize_output(embedding)
-        
-        return jsonify({
-            'embedding': sanitized_embedding,
-            'dimension': len(sanitized_embedding),
-            'model_type': 'touch_encoder',
-            'input_type': validated_data['type'],
-            'status': 'success',
-            'timestamp': datetime.utcnow().isoformat()
-        })
-    
+        return _handle_encode_request(
+            encoder_type='gesture',
+            validator_func=InputValidator.validate_gesture_data,
+            encode_func=encoder_service.encode_gesture,
+            model_name='touch_encoder'
+        )
     except ValidationError as e:
         logger.warning(f"Gesture encoding validation error: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'validation_error'
-        }), 400
-    
+        return jsonify({'error': str(e), 'status': 'validation_error'}), 400
     except ModelNotLoadedException as e:
         logger.error(f"Gesture encoder not loaded: {str(e)}")
-        return jsonify({
-            'error': 'Gesture encoder not available',
-            'status': 'model_error'
-        }), 503
-    
+        return jsonify({'error': 'Gesture encoder not available', 'status': 'model_error'}), 503
     except InvalidInputException as e:
-        logger.error(f"Gesture encoding input error: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'input_error'
-        }), 400
-    
+        return jsonify({'error': str(e), 'status': 'input_error'}), 400
     except Exception as e:
         logger.error(f"Gesture encoding error: {str(e)}\n{traceback.format_exc()}")
-        return jsonify({
-            'error': 'Internal server error',
-            'status': 'error'
-        }), 500
+        return jsonify({'error': 'Internal server error', 'status': 'error'}), 500
+
+
 
 # Typing/Keystroke encoder endpoints
 @app.route('/encode/typing', methods=['POST'])
+@limiter.limit(f"{requests_per_minute} per minute")
 def encode_typing():
     """Encode typing/keystroke data to vector embedding"""
     try:
-        # Check if encoder service is available
-        if encoder_service is None:
-            return jsonify({
-                'error': 'Encoder service not available',
-                'status': 'error'
-            }), 503
-        
-        # Validate content type
-        if not RequestValidator.validate_content_type(request.content_type or ''):
-            return jsonify({
-                'error': 'Invalid content type. Expected application/json',
-                'status': 'error'
-            }), 400
-        
-        data = request.get_json()
-        
-        if not data or 'data' not in data:
-            return jsonify({
-                'error': 'Missing data field in request',
-                'status': 'error'
-            }), 400
-        
-        # Validate request size
-        if not RequestValidator.validate_request_size(data, config.get('api.max_request_size_mb', 10.0)):
-            return jsonify({
-                'error': 'Request size too large',
-                'status': 'error'
-            }), 413
-        
-        # Validate input data
-        validated_data = InputValidator.validate_typing_data(data['data'])
-        
-        # Encode data using typing encoder
-        embedding = encoder_service.encode_typing(validated_data['data'])
-        
-        # Sanitize output
-        sanitized_embedding = InputValidator.sanitize_output(embedding)
-        
-        return jsonify({
-            'embedding': sanitized_embedding,
-            'dimension': len(sanitized_embedding),
-            'model_type': 'typing_encoder',
-            'input_type': validated_data['type'],
-            'status': 'success',
-            'timestamp': datetime.utcnow().isoformat()
-        })
-    
+        return _handle_encode_request(
+            encoder_type='typing',
+            validator_func=InputValidator.validate_typing_data,
+            encode_func=encoder_service.encode_typing,
+            model_name='typing_encoder'
+        )
     except ValidationError as e:
         logger.warning(f"Typing encoding validation error: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'validation_error'
-        }), 400
-    
+        return jsonify({'error': str(e), 'status': 'validation_error'}), 400
     except ModelNotLoadedException as e:
         logger.error(f"Typing encoder not loaded: {str(e)}")
-        return jsonify({
-            'error': 'Typing encoder not available',
-            'status': 'model_error'
-        }), 503
-    
+        return jsonify({'error': 'Typing encoder not available', 'status': 'model_error'}), 503
     except InvalidInputException as e:
-        logger.error(f"Typing encoding input error: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'input_error'
-        }), 400
-    
+        return jsonify({'error': str(e), 'status': 'input_error'}), 400
     except Exception as e:
         logger.error(f"Typing encoding error: {str(e)}\n{traceback.format_exc()}")
-        return jsonify({
-            'error': 'Internal server error',
-            'status': 'error'
-        }), 500
+        return jsonify({'error': 'Internal server error', 'status': 'error'}), 500
+
+
 
 # Batch processing endpoints
 @app.route('/encode/batch/motion', methods=['POST'])
