@@ -1,0 +1,55 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+// Motion embedding model - stores accelerometer/gyroscope behavioral patterns
+model MotionEmbedding {
+  id         String   @id @default(uuid())
+  userId     String
+  sessionId  String
+  embedding  Unsupported("vector(128)")
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+  @@index([sessionId])
+  @@map("motion_embeddings")
+}
+
+// Gesture embedding model - stores touch/swipe patterns
+model GestureEmbedding {
+  id         String   @id @default(uuid())
+  userId     String
+  sessionId  String
+  embedding  Unsupported("vector(64)")
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+  @@index([sessionId])
+  @@map("gesture_embeddings")
+}
+
+// Typing embedding model - stores keystroke dynamics patterns
+model TypingEmbedding {
+  id         String   @id @default(uuid())
+  userId     String
+  sessionId  String
+  embedding  Unsupported("vector(64)")
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+  @@index([sessionId])
+  @@map("typing_embeddings")
+}
