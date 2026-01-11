@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { 
-  getUserById, 
-  getUserTransactions, 
+import {
+  getUserById,
+  getUserTransactions,
   getUserBehavioralSessions,
   getUserBehaviorProfile,
   getUserVectorEmbeddings,
@@ -23,13 +23,13 @@ import { VectorEmbeddingsCard } from "@/components/admin/vector-embeddings-card"
 import { RiskScoresTable } from "@/components/admin/risk-scores-table";
 
 interface UserDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function UserDetailPage({ params }: UserDetailPageProps) {
-  const { id } = params;
+  const { id } = await params;
 
   const [user, transactions, behavioralSessions, behaviorProfile, vectorEmbeddings, latestRiskScore] = await Promise.all([
     getUserById(id),

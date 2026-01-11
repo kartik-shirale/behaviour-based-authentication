@@ -20,29 +20,53 @@
 
 1. [Problem Statement](#problem-statement)
 2. [Solution Overview](#solution-overview)
-3. [System Architecture](#system-architecture)
-4. [Data Flow Diagrams](#data-flow-diagrams)
-5. [Database Schema](#database-schema)
-6. [Repository Structure](#repository-structure)
-7. [Scalability and Fault Tolerance](#scalability-and-fault-tolerance)
-8. [Team and Contributions](#team-and-contributions)
-9. [Tech Stack](#tech-stack)
-10. [Installation and Setup](#installation-and-setup)
-11. [API Documentation](#api-documentation)
+3. [Technical Deep Dive](#technical-deep-dive)
+4. [System Architecture](#system-architecture)
+5. [Data Flow Diagrams](#data-flow-diagrams)
+6. [Database Schema](#database-schema)
+7. [Repository Structure](#repository-structure)
+8. [Scalability and Fault Tolerance](#scalability-and-fault-tolerance)
+9. [Team and Contributions](#team-and-contributions)
+10. [Tech Stack](#tech-stack)
+11. [Installation and Setup](#installation-and-setup)
+12. [API Documentation](#api-documentation)
+13. [Demo Videos](#demo-videos)
 
 ---
 
 ## Problem Statement
 
-Digital banking faces escalating fraud threats:
+### The Scale of Banking Fraud in India
 
-| Threat | Description | Impact |
-|--------|-------------|--------|
-| **Impersonated Registrations** | Fraudsters pose as officials to steal credentials | Account takeover |
-| **SIM Swap Attacks** | Hackers hijack phone numbers to bypass OTPs | OTP interception |
-| **Credential Theft** | Phishing and vishing compromise passwords/PINs | Unauthorized access |
+According to RBI and industry reports:
 
-**The Gap**: Traditional authentication fails because stolen credentials work exactly like legitimate ones.
+| Statistic | Value | Source |
+|-----------|-------|--------|
+| Digital payment fraud cases (2022-23) | **14,483 cases** | RBI Annual Report |
+| Total amount lost to UPI fraud | **Rs 2,145 crore** | NPCI Data |
+| OTP-based authentication bypassed | **67% of fraud cases** | PwC India Study |
+| Account takeover attacks growth | **+250% YoY** | Juniper Research |
+
+### Why Traditional Authentication Fails
+
+Digital banking faces three critical attack vectors:
+
+| Attack Vector | How It Works | Why OTP/PIN Fails |
+|---------------|--------------|-------------------|
+| **SIM Swap Fraud** | Attackers convince telecom to transfer victim's number | OTPs are intercepted directly |
+| **Phishing + Social Engineering** | Fake bank pages/calls trick users into sharing credentials | Credentials work for anyone who has them |
+| **Malware + Screen Recording** | Keyloggers capture PINs as users type | PIN patterns are easily replayable |
+
+**The Fundamental Gap**: Traditional authentication verifies *what you know* (password) or *what you have* (OTP), but NOT *who you are*. Stolen credentials are indistinguishable from legitimate ones.
+
+### Our Hypothesis
+
+> "Every person has unique behavioral patterns - how they type, how they hold their phone, how they swipe. These patterns are nearly impossible to replicate, even if attackers have the credentials."
+
+This is supported by academic research:
+- Killourhy & Maxion (2009): Keystroke dynamics achieve 96% accuracy in user identification
+- Feng et al. (2012): Touch dynamics on mobile devices can identify users with 99.4% accuracy
+- Shi et al. (2011): Motion sensor data provides unique device handling signatures
 
 ---
 
@@ -59,13 +83,106 @@ Sentinel:    Password/PIN + Behavior Match --> Access Granted (Only the real use
 
 We analyze three behavioral modalities that are unique to each user:
 
-| Modality | What We Capture | ML Model |
-|----------|-----------------|----------|
-| **Typing Dynamics** | Keystroke timing, dwell time, flight time | Bidirectional LSTM |
-| **Touch Patterns** | Swipe velocity, pressure, gesture patterns | LSTM Autoencoder |
-| **Motion Behavior** | Device handling, orientation, accelerometer | LSTM Autoencoder |
+| Modality | What We Capture | ML Model | Features Extracted |
+|----------|-----------------|----------|-------------------|
+| **Typing Dynamics** | Keystroke timing, dwell time, flight time | Bidirectional LSTM | Character embedding, timing vectors, coordinate positions |
+| **Touch Patterns** | Swipe velocity, pressure, gesture patterns | LSTM Autoencoder | Touch area, pressure curves, velocity profiles |
+| **Motion Behavior** | Device handling, orientation, accelerometer | LSTM Autoencoder | 3-axis acceleration, gyroscope rotation, gravity vectors |
 
 Each modality produces a **256-dimensional vector embedding** that serves as the user's behavioral fingerprint.
+
+---
+
+## Technical Deep Dive
+
+### ML Model Architecture
+
+```python
+# Bidirectional LSTM Encoder for Keystroke Dynamics
+class KeystrokeEncoder(nn.Module):
+    def __init__(self, vocab_size=128, embed_dim=64, hidden_dim=256):
+        super().__init__()
+        self.char_embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(
+            input_size=embed_dim + 4,  # char embed + [dwell, flight, x, y]
+            hidden_size=hidden_dim,
+            num_layers=2,
+            bidirectional=True,
+            batch_first=True,
+            dropout=0.3
+        )
+        self.fc = nn.Sequential(
+            nn.Linear(hidden_dim * 2, 512),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(512, 256)  # Output: 256-dim embedding
+        )
+    
+    def forward(self, chars, timing_features):
+        char_embeds = self.char_embedding(chars)
+        combined = torch.cat([char_embeds, timing_features], dim=-1)
+        lstm_out, (h_n, _) = self.lstm(combined)
+        h_concat = torch.cat([h_n[-2], h_n[-1]], dim=-1)
+        return F.normalize(self.fc(h_concat), dim=-1)
+```
+
+### Risk Scoring Algorithm
+
+The comprehensive risk assessment combines multiple factors:
+
+```javascript
+// Risk Score Calculation (0-100 scale)
+function calculateRiskScore(behavioralSimilarity, locationData, deviceData) {
+  let riskScore = 0;
+  
+  // Behavioral similarity (40% weight)
+  if (behavioralSimilarity < 0.5) riskScore += 40;
+  else if (behavioralSimilarity < 0.7) riskScore += 25;
+  else if (behavioralSimilarity < 0.85) riskScore += 10;
+  
+  // Location factors (25% weight)
+  if (locationData.vpnDetected) riskScore += 15;
+  if (locationData.impossibleTravel) riskScore += 25;
+  if (locationData.newLocation) riskScore += 10;
+  
+  // Device factors (20% weight)
+  if (deviceData.newDevice) riskScore += 15;
+  if (deviceData.rooted || deviceData.jailbroken) riskScore += 20;
+  
+  // Network factors (15% weight)
+  if (networkData.simChanged) riskScore += 15;
+  if (networkData.proxyDetected) riskScore += 10;
+  
+  return Math.min(riskScore, 100);
+}
+```
+
+### Vector Similarity Matching
+
+We use cosine similarity to compare behavioral embeddings:
+
+```
+Similarity = (Current_Embedding · Stored_Embedding) / (||Current|| × ||Stored||)
+
+Decision Logic:
+- Similarity > 0.85 --> LOW RISK --> Allow Transaction
+- Similarity 0.70-0.85 --> MEDIUM RISK --> Require Security Questions
+- Similarity < 0.70 --> HIGH RISK --> Block + Alert
+```
+
+### VPN and Fraud Detection
+
+```javascript
+// Impossible travel detection
+function detectImpossibleTravel(currentLocation, lastLocation, timeDelta) {
+  const distance = haversineDistance(currentLocation, lastLocation);
+  const velocity = distance / (timeDelta / 3600000); // km/h
+  
+  // Commercial aircraft max speed ~900 km/h
+  // Anything faster indicates VPN/location spoofing
+  return velocity > 1000;
+}
+```
 
 ---
 
@@ -92,6 +209,14 @@ Each modality produces a **256-dimensional vector embedding** that serves as the
 |                    |      DATABASES           |                              |
 |                    |  - Firebase (User Data)  |                              |
 |                    |  - Pinecone (Embeddings) |                              |
+|                    +--------------------------+                              |
+|                                   |                                          |
+|                    +--------------------------+                              |
+|                    |  ADMIN DASHBOARD         |                              |
+|                    |  (Next.js + Prisma)      |                              |
+|                    |  - User Monitoring       |                              |
+|                    |  - Session Analytics     |                              |
+|                    |  - Risk Visualization    |                              |
 |                    +--------------------------+                              |
 |                                                                              |
 +-----------------------------------------------------------------------------+
@@ -278,6 +403,12 @@ hack-the-winter/
 |   +-- touch-encoder/        # Touch/Gesture LSTM
 |   +-- motion-encoder/       # Motion/IMU LSTM
 |
++-- bank-website/             # Admin Monitoring Dashboard (Next.js)
+|   +-- src/app/admin/        # Admin pages (users, sessions, analytics)
+|   +-- src/components/admin/ # Dashboard components
+|   +-- prisma/               # Database schema
+|   +-- firebaseConfig.ts     # Firebase connection
+|
 +-- README.md                 # This file (Round 2)
 +-- README_ROUND1.md          # Round 1 submission
 ```
@@ -364,7 +495,7 @@ flowchart TD
 | <img src="https://github.com/kartik-shirale.png" width="60"/> | **Kartik Shirale** | [@kartik-shirale](https://github.com/kartik-shirale) | **Team Lead** | Mobile App Architecture, Data Collection Module, Project Setup, Documentation |
 | <img src="https://github.com/ajay-on-code.png" width="60"/> | **Ajay Patil** | [@ajay-on-code](https://github.com/ajay-on-code) | **Backend Developer** | Complete Backend (9,000+ lines), Risk Assessment, Vector DB Integration, API Design |
 | <img src="https://github.com/pragatipatil46p-blip.png" width="60"/> | **Pragati Patil** | [@pragatipatil46p-blip](https://github.com/pragatipatil46p-blip) | **ML Engineer** | ML Service Scalability, Caching System, Metrics and Monitoring, Performance Optimization |
-| <img src="https://github.com/priyankabari01.png" width="60"/> | **Priyanka Bari** | [@priyankabari01](https://github.com/priyankabari01) | **UI Developer** | App UI Polish, Animations, Get Started Screen, Profile Updates |
+| <img src="https://github.com/priyankabari01.png" width="60"/> | **Priyanka Bari** | [@priyankabari01](https://github.com/priyankabari01) | **Full Stack Developer** | Admin Monitoring Dashboard (Next.js), App UI Polish, Animations, User Analytics |
 
 ### Work Distribution
 
@@ -393,10 +524,12 @@ flowchart TD
 |  +-- Rate Limiting Integration                                                  |
 |  +-- Performance Optimization and Code Refactoring                              |
 |                                                                                 |
-|  Priyanka Bari (UI Developer)                                                   |
-|  +-- Get Started Screen Redesign (animations, icons)                            |
-|  +-- Profile Screen Cleanup                                                     |
-|  +-- Branding Updates (Sentinel naming)                                         |
+|  Priyanka Bari (Full Stack Developer)                                          |
+|  +-- Admin Monitoring Dashboard (Next.js + Prisma)                              |
+|  +-- User Management Interface                                                  |
+|  +-- Behavioral Session Analytics                                               |
+|  +-- Transaction Monitoring and Visualization                                   |
+|  +-- App UI Polish (Get Started Screen, Profile, Animations)                    |
 |                                                                                 |
 +--------------------------------------------------------------------------------+
 ```
@@ -488,6 +621,40 @@ npx expo start
 | POST | `/encode/motion` | Motion encoding |
 | POST | `/encode/gesture` | Gesture encoding |
 | POST | `/encode/typing` | Typing encoding |
+
+---
+
+## Demo Videos
+
+### 1. Account Creation and First-Time Registration
+
+<p align="center">
+  <a href="https://youtu.be/9OPgxWe5xJ0">
+    <img src="https://img.youtube.com/vi/9OPgxWe5xJ0/maxresdefault.jpg" alt="Account Creation Demo" width="600"/>
+  </a>
+</p>
+
+> Creating a user account via the Admin Monitoring Dashboard and first-time app registration with behavioral data collection.
+
+### 2. Fraud Detection in Action
+
+<p align="center">
+  <a href="https://youtu.be/DPQbtpTsuko">
+    <img src="https://img.youtube.com/vi/DPQbtpTsuko/maxresdefault.jpg" alt="Fraud Detection Demo" width="600"/>
+  </a>
+</p>
+
+> After sufficient app usage, the system has enough behavioral data to detect fraudulent login attempts by comparing behavior patterns.
+
+### 3. Admin Monitoring Dashboard
+
+<p align="center">
+  <a href="https://youtu.be/Y4i1KNk7h0Y">
+    <img src="https://img.youtube.com/vi/Y4i1KNk7h0Y/maxresdefault.jpg" alt="Monitoring Dashboard Demo" width="600"/>
+  </a>
+</p>
+
+> The monitoring dashboard showcases user records, behavioral sessions, transaction history, and real-time risk analysis.
 
 ---
 

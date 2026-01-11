@@ -254,7 +254,7 @@ class FirebaseService {
       }
 
       const response = await fetch(
-        "https://finshield-backend-v21b.onrender.com/api/send-otp",
+        "https://sentienl-backend.onrender.com/api/send-otp",
         {
           method: "POST",
           headers: {
@@ -293,7 +293,7 @@ class FirebaseService {
 
       // Use backend API for OTP verification
       const response = await fetch(
-        "https://finshield-backend-v21b.onrender.com/api/verify-otp",
+        "https://sentienl-backend.onrender.com/api/verify-otp",
         {
           method: "POST",
           headers: {
@@ -360,7 +360,7 @@ class FirebaseService {
 
       // Use backend API for OTP resending
       const response = await fetch(
-        "https://finshield-backend-v21b.onrender.com/api/resend-otp",
+        "https://sentienl-backend.onrender.com/api/resend-otp",
         {
           method: "POST",
           headers: {
