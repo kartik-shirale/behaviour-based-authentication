@@ -887,8 +887,8 @@ export interface VectorEmbedding {
     userId: string;
     sessionId: string;
     timestamp: string;
-    type: "motion" | "gesture" | "typing";
-    [key: string]: any;
+    type?: "motion" | "gesture" | "typing";
+    [key: string]: unknown;
   };
 }
 
@@ -901,24 +901,32 @@ export interface RiskScore {
   reason: string;
   recommendation: string;
   breakdown: {
-    locationRisk: number;
-    behaviorRisk: number;
-    deviceRisk: number;
-    networkRisk: number;
-    typingRisk: number;
+    // New field names from actual Firebase data
+    location?: number;
+    motion?: number;
+    deviceSecurity?: number;
+    networkSim?: number;
+    touch?: number;
+    typing?: number;
+    // Legacy field names (for backwards compatibility)
+    locationRisk?: number;
+    behaviorRisk?: number;
+    deviceRisk?: number;
+    networkRisk?: number;
+    typingRisk?: number;
   };
-  alerts: {
+  alerts: (string | {
     type: string;
     message: string;
     severity: "low" | "medium" | "high";
-  }[];
-  extraInfo: {
-    locationCoordinates: {
+  })[];
+  extraInfo?: {
+    locationCoordinates?: {
       latitude: number;
       longitude: number;
       accuracy: number;
       timestamp: string | number;
-    };
+    } | null;
   };
   timestamp: any;
   createdAt: any;
@@ -942,9 +950,13 @@ export async function getUserBehaviorProfile(
     }
 
     const doc = snapshot.docs[0];
+    const data = doc.data();
+    // Serialize Firebase Timestamps to plain objects
+    const serializedData = serializeFirestoreData(data);
+    
     return {
       userId: doc.id,
-      ...doc.data(),
+      ...serializedData,
     } as BehaviorProfile;
   } catch (error) {
     console.error("Error fetching user behavior profile:", error);

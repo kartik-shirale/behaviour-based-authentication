@@ -109,51 +109,78 @@ export default function LoadingSetupScreen() {
           console.log(`Data sent successfully to ${endpoint}`);
           console.log('API Response:', result.data);
 
-          // Handle re-registration response (first-time registration handled above)
-          // Parse API response to determine if security questions are needed
-          if (result.data?.requiresSecurityQuestions === true) {
-            console.log('🔒 Suspicious activity detected, showing security questions');
-            router.replace('./security-questions-verification');
-          } else {
-            console.log('✅ Normal activity detected, proceeding to dashboard');
+          // Parse the recommendation from the new API response structure
+          // Response format: { data: { riskAssessment: { riskScore: { recommendation: "ALLOW" | "VERIFY" | "BLOCK" } } } }
+          const recommendation = result.data?.data?.riskAssessment?.riskScore?.recommendation?.toUpperCase() ||
+            result.data?.riskAssessment?.riskScore?.recommendation?.toUpperCase() ||
+            result.data?.recommendation?.toUpperCase() ||
+            'ALLOW'; // Default to ALLOW if not specified
 
-            // Store user credentials for re-registration users before going to dashboard
-            try {
-              const { storeUserCredentials, pin: tempPin } = useUserStore.getState();
+          const riskLevel = result.data?.data?.riskLevel ||
+            result.data?.riskLevel ||
+            'low';
 
-              if (tempPin && user?.uid) {
-                await storeUserCredentials(
-                  user.uid,
-                  tempPin,
-                  user.biometricEnabled || false
-                );
-                console.log('✅ User credentials stored after successful API verification');
-              }
-            } catch (credentialError) {
-              console.error('Failed to store credentials:', credentialError);
-            }
+          console.log(`🎯 Risk Assessment - Recommendation: ${recommendation}, Risk Level: ${riskLevel}`);
 
-            // Navigate immediately, start data collection in background
-            router.replace('../(app)/dashboard');
+          // Route based on recommendation
+          switch (recommendation) {
+            case 'BLOCK':
+              // High risk - go directly to suspicious activity page
+              console.log('🚫 BLOCK recommendation - redirecting to suspicious activity');
+              router.replace('./suspicious-activity');
+              break;
 
-            // Start login data collection in background
-            setTimeout(async () => {
+            case 'REVIEW':
+            case 'CHECK':
+              // Medium risk - need security question verification
+              console.log('🔒 VERIFY/CHECK recommendation - redirecting to security questions');
+              router.replace('./security-questions-verification');
+              break;
+
+            case 'ALLOW':
+            default:
+              // Low risk - proceed to dashboard
+              console.log('✅ ALLOW recommendation - proceeding to dashboard');
+
+              // Store user credentials before going to dashboard
               try {
-                await startDataCollection('login');
-              } catch (bgError) {
-                console.warn('Background login data collection failed:', bgError);
+                const { storeUserCredentials, pin: tempPin } = useUserStore.getState();
+
+                if (tempPin && user?.uid) {
+                  await storeUserCredentials(
+                    user.uid,
+                    tempPin,
+                    user.biometricEnabled || false
+                  );
+                  console.log('✅ User credentials stored after successful API verification');
+                }
+              } catch (credentialError) {
+                console.error('Failed to store credentials:', credentialError);
               }
-            }, 100);
+
+              // Navigate immediately, start data collection in background
+              router.replace('../(app)/dashboard');
+
+              // Start login data collection in background
+              setTimeout(async () => {
+                try {
+                  await startDataCollection('login');
+                } catch (bgError) {
+                  console.warn('Background login data collection failed:', bgError);
+                }
+              }, 100);
+              break;
           }
         } else {
-          // Handle actual failure case (this shouldn't happen with current bypass logic)
-          console.error('Failed to send data, but this should not happen with bypass logic');
+          // Handle actual failure case
+          console.error('Failed to send data to API');
 
-          // Fallback to security questions for re-registration
+          // Fallback based on scenario - err on the side of security
           if (collectionScenario === 're-registration') {
+            console.log('⚠️ API failed, falling back to security questions for re-registration');
             router.replace('./security-questions-verification');
           } else {
-            // Store credentials for first-time users even in fallback
+            // For other scenarios, try to proceed with dashboard
             try {
               const { storeUserCredentials, pin: tempPin } = useUserStore.getState();
 
@@ -163,7 +190,6 @@ export default function LoadingSetupScreen() {
                   tempPin,
                   user.biometricEnabled || false
                 );
-                console.log('✅ User credentials stored in fallback scenario');
               }
             } catch (credentialError) {
               console.error('Failed to store credentials in fallback:', credentialError);

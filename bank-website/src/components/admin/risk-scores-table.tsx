@@ -180,8 +180,8 @@ export function RiskScoresTable({ userId }: RiskScoresTableProps) {
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{riskScore.totalScore}/100</span>
                         </div>
-                        <Progress 
-                          value={riskScore.totalScore} 
+                        <Progress
+                          value={riskScore.totalScore}
                           className="h-2 w-16"
                         />
                       </div>
@@ -190,38 +190,49 @@ export function RiskScoresTable({ userId }: RiskScoresTableProps) {
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
                           <span>Location:</span>
-                          <span>{riskScore.breakdown.locationRisk}</span>
+                          <span>{riskScore.breakdown?.location?.toFixed?.(1) ?? riskScore.breakdown?.locationRisk ?? 'N/A'}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Behavior:</span>
-                          <span>{riskScore.breakdown.behaviorRisk}</span>
+                          <span>Motion:</span>
+                          <span>{riskScore.breakdown?.motion?.toFixed?.(1) ?? riskScore.breakdown?.behaviorRisk ?? 'N/A'}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Device:</span>
-                          <span>{riskScore.breakdown.deviceRisk}</span>
+                          <span>{riskScore.breakdown?.deviceSecurity?.toFixed?.(1) ?? riskScore.breakdown?.deviceRisk ?? 'N/A'}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Network:</span>
-                          <span>{riskScore.breakdown.networkRisk}</span>
+                          <span>{riskScore.breakdown?.networkSim?.toFixed?.(1) ?? riskScore.breakdown?.networkRisk ?? 'N/A'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Touch:</span>
+                          <span>{riskScore.breakdown?.touch?.toFixed?.(1) ?? 'N/A'}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Typing:</span>
-                          <span>{riskScore.breakdown.typingRisk}</span>
+                          <span>{riskScore.breakdown?.typing?.toFixed?.(1) ?? riskScore.breakdown?.typingRisk ?? 'N/A'}</span>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
-                        {riskScore.alerts.slice(0, 2).map((alert, index) => (
-                          <Badge 
-                            key={index} 
-                            variant={getRiskLevelVariant(alert.severity)}
-                            className="text-xs"
-                          >
-                            {alert.type}
-                          </Badge>
-                        ))}
-                        {riskScore.alerts.length > 2 && (
+                        {riskScore.alerts?.slice(0, 2).map((alert, index) => {
+                          // Handle both string alerts and object alerts
+                          const isString = typeof alert === 'string';
+                          const alertText = isString ? alert : alert.type;
+                          const severity = isString ? 'medium' : alert.severity;
+                          return (
+                            <Badge
+                              key={index}
+                              variant={getRiskLevelVariant(severity)}
+                              className="text-xs block truncate max-w-[150px]"
+                              title={alertText}
+                            >
+                              {alertText.length > 20 ? alertText.slice(0, 20) + '...' : alertText}
+                            </Badge>
+                          );
+                        })}
+                        {(riskScore.alerts?.length ?? 0) > 2 && (
                           <Badge variant="outline" className="text-xs">
                             +{riskScore.alerts.length - 2} more
                           </Badge>
